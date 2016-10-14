@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TriathlonTimeEstimatorApplication {
 
 	public static void main(String[] args) {
+		//Making a change
 		SpringApplication.run(TriathlonTimeEstimatorApplication.class, args);
 	}
 }

@@ -1,10 +1,10 @@
+package com.triathlon;
+
 /** 
  * @author Jake Pickett
  * @author Sonia Narayanan
  * @version October 12, 2016
  */
-
-import java.util.*; 
 
 
 public class TriathlonTime {
@@ -15,12 +15,12 @@ public class TriathlonTime {
    private Time t2Time;
    private Time runTime;
 
-   public TriathlonTime() {
-      this.swimTime = swimTime;
-      this.t1Time = t1Time;
-      this.bikeTime = bikeTime;
-      this.t2Time = t2Time;
-      this.runTime = runTime;
+   public TriathlonTime(Time swim, Time t1, Time bike, Time t2, Time run) {
+      this.swimTime = swim;
+      this.t1Time = t1;
+      this.bikeTime = bike;
+      this.t2Time = t2;
+      this.runTime = run;
    }
 
    public Time getSwimTime() {
@@ -28,7 +28,7 @@ public class TriathlonTime {
    }
    
    public void setSwimTime(Time newSwimTime) {
-      swimTime = newSwimTime;
+      this.swimTime = newSwimTime;
    }
 
    public Time getT1Time() {
@@ -36,7 +36,7 @@ public class TriathlonTime {
    }
 
    public void setT1Time(Time newT1Time) {
-      t1Time = newT1Time;
+      this.t1Time = newT1Time;
    }
 
    public Time getBikeTime() {
@@ -44,7 +44,7 @@ public class TriathlonTime {
    }
 
    public void setBikeTime(Time newBikeTime) {
-      bikeTime = newBikeTime;
+      this.bikeTime = newBikeTime;
    }
    
    public Time getT2Time() {
@@ -52,7 +52,7 @@ public class TriathlonTime {
    }
 
    public void setT2Time(Time newT2Time) {
-      t2Time = newT2Time;
+      this.t2Time = newT2Time;
    }
 
    public Time getRunTime() {
@@ -60,25 +60,12 @@ public class TriathlonTime {
    }
 
    public void setRunTime(Time newRunTime) {
-      runTime = newRunTime;
+      this.runTime = newRunTime;
    }
 
-   public Time getTotalTime(Time swimTime, Time t1Time, Time bikeTime, Time t2Time, Time runTime) {
-
-      int[] swimTemp = swimTime.getTime();
-      int[] t1Temp = t1Time.getTime();
-      int[] bikeTemp = bikeTime.getTime();
-      int[] t2Temp = t2Time.getTime();
-      int[] runTemp = runTime.getTime();
-
-      int totalHours = swimTemp[0] + t1Temp[0] + bikeTemp[0] + t2Temp[0] + runTemp[0];
-      int totalMinutes = swimTemp[1] + t1Temp[1] + bikeTemp[1] + t2Temp[1] + runTemp[1];
-      int totalSeconds = swimTemp[2] + t1Temp[2] + bikeTemp[2] + t2Temp[2] + runTemp[2];
-      
-      Time totalTime = new Time();
-      totalTime.setTime(totalHours, totalMinutes, totalSeconds);
-
-      return totalTime;
+   public int getTotalTimeInSeconds() {
+      return swimTime.getTimeInSeconds() + t1Time.getTimeInSeconds() + bikeTime.getTimeInSeconds() 
+      		+ t2Time.getTimeInSeconds() + runTime.getTimeInSeconds();
    }
 }
 
