@@ -15,4 +15,11 @@ public class TriathlonTimeTest {
     assertEquals(3909, triathtime1.getTotalTimeInSeconds());
   }
 
+
+  public void testGetTotalTimeInSeconds2() {
+    TriathlonTime triathtime2 = new TriathlonTime(new Time(0, 0, 3), new Time(0, 0, 3),
+        new Time(0, 0, 4), new Time(0, 5, 0), new Time(1, 0, 0));
+    assertEquals(3910, triathtime2.getTotalTimeInSeconds2());
+  }
+
 }
