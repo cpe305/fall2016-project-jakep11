@@ -8,12 +8,12 @@ public class Triathlon {
     SUNNY, WINDY, RAINY
   }
 
-  public Weather weather;
-  public double elevationChange;
-  public Date date;
-  public double distance;
-  public double latitude;
-  public double longitude;
+  private Weather weather;
+  private double elevationChange;
+  private Date date;
+  private double distance;
+  private double latitude;
+  private double longitude;
 
   /**
    * Triathlon class to model a triathlon.
