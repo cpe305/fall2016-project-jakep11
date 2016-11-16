@@ -19,7 +19,8 @@ public class Application {
 
   public static void main(String[] args) {
     // Making a change
-    SpringApplication.run(Application.class, args);
+    SpringApplication.run(Application.class, args).close();
+    //((ConfigurableApplicationContext)appCtx).close();
     //SpringApplication.exit(Application.class, 1);
   }
   
