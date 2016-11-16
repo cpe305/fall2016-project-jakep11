@@ -78,16 +78,15 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
 		</dependency>
 		<dependency>
     		<groupId>junit</groupId>
    			<artifactId>junit</artifactId>
-    		<version>4.12</version>
-		</dependency>
+    		<scope>test</scope>
+		</dependency> 
 	</dependencies>
 	
 <profiles>
@@ -107,6 +106,7 @@
 
 
 	<build>
+	<pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -118,6 +118,7 @@
                 <version>3.2</version>
             </plugin>
 		</plugins>
+		</pluginManagement>
 	</build>
 
 

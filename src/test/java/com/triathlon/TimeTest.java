@@ -19,5 +19,8 @@ public class TimeTest {
     assertEquals(20, time2.getTimeInSeconds());
     time2.setTime(2, 0, 25);
     assertEquals(7225, time2.getTimeInSeconds());
+    
+    Time time3 = new Time(59);
+    assertEquals(59, time3.getTimeInSeconds());
   }
 }

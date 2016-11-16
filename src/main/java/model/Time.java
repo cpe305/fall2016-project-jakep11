@@ -24,9 +24,9 @@ public class Time {
    * @param second time in seconds
    */
   public Time(int second) {
-    this.hour = second % 3600;
-    this.minute = (second % 3600) % 60;
-    this.second = ((second % 3600) % 60) % 60;
+    this.hour = second / 3600;
+    this.minute = second / 60;
+    this.second = second % 60;
   }
 
   /**
