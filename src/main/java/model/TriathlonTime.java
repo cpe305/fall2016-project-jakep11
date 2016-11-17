@@ -2,6 +2,7 @@ package model;
 
 /**
  * Project Description.
+ * 
  * @author Jake Pickett
  * @author Sonia Narayanan
  * @version October 12, 2016
@@ -18,6 +19,7 @@ public class TriathlonTime {
 
   /**
    * Class to hold the time for a Triathlon.
+   * 
    * @param swim swim Time
    * @param t1 t1 Time
    * @param bike bike Time
@@ -75,6 +77,33 @@ public class TriathlonTime {
   public int getTotalTimeInSeconds() {
     return swimTime.getTimeInSeconds() + t1Time.getTimeInSeconds() + bikeTime.getTimeInSeconds()
         + t2Time.getTimeInSeconds() + runTime.getTimeInSeconds();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (obj.getClass() != TriathlonTime.class) {
+      return false;
+    }
+    TriathlonTime triTime = (TriathlonTime) obj;
+    System.out.println("Checking triathlontime");
+    System.out.println(swimTime.getTimeInSeconds());
+    System.out.println(bikeTime.getTimeInSeconds());
+    System.out.println(runTime.getTimeInSeconds());
+    System.out.println(triTime.getSwimTime().getTimeInSeconds());
+    System.out.println(triTime.getBikeTime().getTimeInSeconds());
+    System.out.println(triTime.getRunTime().getTimeInSeconds());
+    return swimTime == triTime.getSwimTime() && t1Time == triTime.getT1Time()
+        && bikeTime == triTime.getBikeTime() && t2Time == triTime.getT2Time()
+        && runTime == triTime.getRunTime();
+  }
+
+  @Override
+  public String toString() {
+    return "S: " + swimTime + ". T1: " + t1Time + ". Bike: " + bikeTime + ". T2: " + t2Time
+        + ". Run: " + runTime;
   }
 }
 

@@ -9,11 +9,11 @@ public class Stats {
   }
 
   public static double runSpeed(Triathlon tri) {
-    return tri.getDistance().getRun() / tri.getTime().getRunTime().getTimeInHours();
+    return tri.getTime().getRunTime().getTimeInMinutes() / tri.getDistance().getRun();
   }
 
   public static double swimPace(Triathlon tri) {
-    return tri.getDistance().getSwim() / tri.getTime().getSwimTime().getTimeInHours();
+    return tri.getTime().getSwimTime().getTimeInMinutes() / tri.getDistance().getSwim() * 100;
   }
 
   public static double getAverageSwimDistance(ArrayList<Triathlon> triathlons) {
@@ -32,7 +32,7 @@ public class Stats {
     double count = 0;
 
     for (Triathlon t : triathlons) {
-      tempBikeD += t.getDistance().getSwim();
+      tempBikeD += t.getDistance().getBike();
       count++;
     }
     return tempBikeD / count;
@@ -43,7 +43,7 @@ public class Stats {
     double count = 0;
 
     for (Triathlon t : triathlons) {
-      tempRunD += t.getDistance().getSwim();
+      tempRunD += t.getDistance().getRun();
       count++;
     }
     return tempRunD / count;
@@ -85,11 +85,14 @@ public class Stats {
     double count = 0;
 
     for (Triathlon t : triathlons) {
+
       bikeT.setTime(t.getTime().getBikeTime().getTimeInSeconds() + bikeT.getTimeInSeconds());
+
       count++;
     }
 
     bikeT.setTime(bikeT.getTimeInSeconds() / (int) count);
+    //System.out.println(bikeT.getTimeInSeconds());
     return bikeT;
   }
 

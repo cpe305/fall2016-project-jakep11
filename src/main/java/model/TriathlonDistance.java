@@ -62,9 +62,22 @@ public class TriathlonDistance {
     this.run = run;
   }
 
-  public TriathlonDistance (double swim, double bike, double run) {
+  public TriathlonDistance(double swim, double bike, double run) {
     this.swim = swim;
     this.bike = bike;
     this.run = run;
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (obj.getClass() != TriathlonDistance.class) {
+      return false;
+    }
+    TriathlonDistance triDist = (TriathlonDistance) obj;
+    
+    return swim == triDist.getSwim() && bike == triDist.getBike() && run == triDist.getRun();
   }
 }
