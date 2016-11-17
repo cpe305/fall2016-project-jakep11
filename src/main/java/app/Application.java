@@ -1,12 +1,14 @@
 package app;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -19,7 +21,7 @@ public class Application {
 
   public static void main(String[] args) {
     // Making a change
-    SpringApplication.run(Application.class, args).close();
+    SpringApplication.run(Application.class, args);
     //((ConfigurableApplicationContext)appCtx).close();
     //SpringApplication.exit(Application.class, 1);
   }
@@ -40,6 +42,13 @@ public class Application {
       .and()
           .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
           .csrf().csrfTokenRepository(csrfTokenRepository());
+    }
+    
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .inMemoryAuthentication()
+                .withUser("admin").password("password").roles("USER");
     }
     
     private CsrfTokenRepository csrfTokenRepository() {
