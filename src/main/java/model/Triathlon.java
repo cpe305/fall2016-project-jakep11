@@ -12,17 +12,16 @@ public class Triathlon {
     COLD, COOL, MODERATE, WARM, HOT
   }
 
-  private WeatherConditions weather;
-  private Temperature temperature;
   
-
-  private Date date;
   private TriathlonDistance distance;
   private TriathlonElevation elevation;
   private TriathlonTime time;
   private String name;
   private String location;
+  private Date date;
   private Time startTime;
+  private WeatherConditions weather;
+  private Temperature temperature;
   
   public WeatherConditions getWeather() {
     return weather;
@@ -96,18 +95,20 @@ public class Triathlon {
     this.startTime = startTime;
   }
 
-  public Triathlon(WeatherConditions weather, Date date, TriathlonDistance distance,
-      TriathlonElevation elevation, TriathlonTime time, String name, String location,
-      Time startTime) {
-    super();
-    this.weather = weather;
-    this.date = date;
+  
+
+    public Triathlon(TriathlonDistance distance, TriathlonElevation elevation, TriathlonTime time,
+      String name, String location, Date date, Time startTime, WeatherConditions weather,
+      Temperature temperature) {
     this.distance = distance;
     this.elevation = elevation;
     this.time = time;
     this.name = name;
     this.location = location;
+    this.date = date;
     this.startTime = startTime;
+    this.weather = weather;
+    this.temperature = temperature;
   }
 
     public Triathlon() {
