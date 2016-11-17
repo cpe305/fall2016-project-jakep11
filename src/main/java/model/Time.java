@@ -69,6 +69,7 @@ public class Time {
       return false;
     }
     Time time = (Time) obj;
+    
     return time.getTimeInSeconds() == getTimeInSeconds();
     
   }

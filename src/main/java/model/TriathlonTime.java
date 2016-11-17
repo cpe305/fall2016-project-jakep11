@@ -88,16 +88,10 @@ public class TriathlonTime {
       return false;
     }
     TriathlonTime triTime = (TriathlonTime) obj;
-    System.out.println("Checking triathlontime");
-    System.out.println(swimTime.getTimeInSeconds());
-    System.out.println(bikeTime.getTimeInSeconds());
-    System.out.println(runTime.getTimeInSeconds());
-    System.out.println(triTime.getSwimTime().getTimeInSeconds());
-    System.out.println(triTime.getBikeTime().getTimeInSeconds());
-    System.out.println(triTime.getRunTime().getTimeInSeconds());
-    return swimTime == triTime.getSwimTime() && t1Time == triTime.getT1Time()
-        && bikeTime == triTime.getBikeTime() && t2Time == triTime.getT2Time()
-        && runTime == triTime.getRunTime();
+    
+    return swimTime.equals(triTime.getSwimTime()) && t1Time.equals(triTime.getT1Time())
+        && bikeTime.equals(triTime.getBikeTime()) && t2Time.equals(triTime.getT2Time())
+        && runTime.equals(triTime.getRunTime());
   }
 
   @Override
