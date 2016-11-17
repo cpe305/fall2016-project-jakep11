@@ -23,5 +23,15 @@ public class TriathlonTimeTest {
     assertEquals(3910, triathtime1.getTotalTimeInSeconds());
   }
 
+  @Test 
+  public void testGettersAndSetters() {
+    TriathlonTime triTime = new TriathlonTime();
+    triTime.setSwimTime(new Time(234));
+    triTime.setT1Time(new Time(32));
+    triTime.setBikeTime(new Time(1800));
+    triTime.setT2Time(new Time(15));
+    triTime.setRunTime(new Time(1111));
+    assertEquals(triTime, new TriathlonTime(new Time(234),new Time(32),new Time(1800),new Time(15),new Time(1111)));
+  }
 
 }

@@ -8,6 +8,10 @@ public class TriathlonElevation {
     this.bikeElevation = bike;
     this.runElevation = run;
   }
+  
+  public TriathlonElevation() {
+    
+  }
 
   public double getBikeElevation() {
     return bikeElevation;

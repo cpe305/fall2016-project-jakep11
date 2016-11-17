@@ -89,8 +89,7 @@ public class StatsTest {
   @Test
   public void testGetAverageTimeFromAllTris() {
     TriathlonTime averageTriTime = Stats.getAverageTimeFromAllTris(triList);
-    System.out.println(tri2.getTime());
-    System.out.println(averageTriTime);
+    
     assertEquals(tri2.getTime(), averageTriTime);
   }
 

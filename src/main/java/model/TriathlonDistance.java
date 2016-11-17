@@ -31,11 +31,20 @@ public class TriathlonDistance {
         this.bike = 112;
         this.run = 26.2;
         break;
+          
     }
   }
   
+  public TriathlonDistance(double swim, double bike, double run) {
+    this.swim = swim;
+    this.bike = bike;
+    this.run = run;
+  }
+  
   public TriathlonDistance() {
-    
+    this.swim = 0;
+    this.bike = 0;
+    this.run = 0;
   }
   
   public double getSwim() {
@@ -62,11 +71,6 @@ public class TriathlonDistance {
     this.run = run;
   }
 
-  public TriathlonDistance(double swim, double bike, double run) {
-    this.swim = swim;
-    this.bike = bike;
-    this.run = run;
-  }
   
   @Override
   public boolean equals(Object obj) {

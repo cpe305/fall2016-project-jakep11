@@ -33,6 +33,10 @@ public class TriathlonTime {
     this.t2Time = t2;
     this.runTime = run;
   }
+  
+  public TriathlonTime() {
+    
+  }
 
   public Time getSwimTime() {
     return swimTime;
