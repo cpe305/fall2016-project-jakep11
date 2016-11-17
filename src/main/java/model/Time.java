@@ -40,8 +40,22 @@ public class Time {
     minute = newMinute;
     second = newSecond;
   }
+  
+  public void setTime(int second) {
+    this.hour = second / 3600;
+    this.minute = second / 60;
+    this.second = second % 60;
+  }
 
   public int getTimeInSeconds() {
     return 3600 * hour + 60 * minute + second;
+  }
+  
+  public double getTimeInMinutes() {
+    return 60 * hour + minute + second / 60.0;
+  }
+  
+  public double getTimeInHours() {
+    return hour + minute / 60.0 + second / 3600.0;
   }
 }

@@ -4,54 +4,42 @@ import java.util.Date;
 
 public class Triathlon {
 
-  public enum Weather {
-    SUNNY, WINDY, RAINY
+  public enum WeatherConditions {
+    SUNNY, WINDY, LIGHT_RAIN, HEAVY_RAIN, DRY, HUMID
+  }
+  
+  public enum Temperature {
+    COLD, COOL, MODERATE, WARM, HOT
   }
 
-  private Weather weather;
-  private double elevationChange;
+  private WeatherConditions weather;
+  private Temperature temperature;
+  
+
   private Date date;
-  private double distance;
-  private double latitude;
-  private double longitude;
-
-  /**
-   * Triathlon class to model a triathlon.
-   * 
-   * @param weather weather
-   * @param elevationChange elevation change
-   * @param date date
-   * @param distance distance
-   * @param latitude latitude
-   * @param longitude longitude
-   */
-  public Triathlon(Weather weather, double elevationChange, Date date, double distance,
-      double latitude, double longitude) {
-    super();
-    this.weather = weather;
-    this.elevationChange = elevationChange;
-    this.date = date;
-    this.distance = distance;
-    this.latitude = latitude;
-    this.longitude = longitude;
-  }
-
-  public Weather getWeather() {
+  private TriathlonDistance distance;
+  private TriathlonElevation elevation;
+  private TriathlonTime time;
+  private String name;
+  private String location;
+  private Time startTime;
+  
+  public WeatherConditions getWeather() {
     return weather;
   }
 
-  public void setWeather(Weather weather) {
+  public void setWeather(WeatherConditions weather) {
     this.weather = weather;
   }
 
-  public double getElevationChange() {
-    return elevationChange;
+  public Temperature getTemperature() {
+    return temperature;
   }
 
-  public void setElevationChange(double elevationChange) {
-    this.elevationChange = elevationChange;
+  public void setTemperature(Temperature temperature) {
+    this.temperature = temperature;
   }
-
+  
   public Date getDate() {
     return date;
   }
@@ -60,27 +48,71 @@ public class Triathlon {
     this.date = date;
   }
 
-  public double getDistance() {
+  public TriathlonDistance getDistance() {
     return distance;
   }
 
-  public void setDistance(double distance) {
+  public void setDistance(TriathlonDistance distance) {
     this.distance = distance;
   }
 
-  public double getLatitude() {
-    return latitude;
+  public TriathlonElevation getElevation() {
+    return elevation;
   }
 
-  public void setLatitude(double latitude) {
-    this.latitude = latitude;
+  public void setElevation(TriathlonElevation elevation) {
+    this.elevation = elevation;
   }
 
-  public double getLongitude() {
-    return longitude;
+  public TriathlonTime getTime() {
+    return time;
   }
 
-  public void setLongitude(double longitude) {
-    this.longitude = longitude;
+  public void setTime(TriathlonTime time) {
+    this.time = time;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  public Time getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(Time startTime) {
+    this.startTime = startTime;
+  }
+
+  public Triathlon(WeatherConditions weather, Date date, TriathlonDistance distance,
+      TriathlonElevation elevation, TriathlonTime time, String name, String location,
+      Time startTime) {
+    super();
+    this.weather = weather;
+    this.date = date;
+    this.distance = distance;
+    this.elevation = elevation;
+    this.time = time;
+    this.name = name;
+    this.location = location;
+    this.startTime = startTime;
+  }
+
+    public Triathlon() {
+      
+    }
+
+
 }
