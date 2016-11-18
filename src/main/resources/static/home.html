@@ -1,8 +1,24 @@
-<h1>Greeting</h1>
-<div ng-show="authenticated">
-	<p>The ID is {{greeting.id}}</p>
-	<p>The content is {{greeting.content}}</p>
-</div>
-<div  ng-show="!authenticated">
-	<p>Login to see your greeting</p>
+<style>
+body {
+	font-family: 'Open Sans', sans-serif;
+	background-color: #fafff7;
+	background-image: url("http://cdn3.assets.sites.launchrocketship.com/34182baf-0a13-402a-8d94-7d1a4c152fa4/files/947f32ff-7d11-4b91-ae8c-8679d82acfd8/triathlon.jpg");
+	
+}
+.row {
+	padding: 10px;
+}
+</style>
+<div class="row">
+	<div class="center-block">
+		<div id="frontPageBox">
+			<h1>Triathlon Time Tracker</h1>
+
+			<div ng-show="authenticated">Hi {{name}}, Welcome to the
+				Triathlon Time Tracker app!</div>
+			<div ng-show="!authenticated">
+				<p>Please log in or create an account!</p>
+			</div>
+		</div>
+	</div>
 </div>

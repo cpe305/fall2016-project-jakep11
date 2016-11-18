@@ -1,8 +1,9 @@
-<h1>Login</h1>
+<h1>Create an Account</h1>
+
 <div class="alert alert-danger" ng-show="error">
-	There was a problem logging in. Please try again.
+	This account already exists. Please choose a new username.
 </div>
-<form role="form" ng-submit="login()">
+<form role="form" ng-submit="createUser()">
 	<div class="form-group">
 		<label for="username">Username:</label> <input type="text"
 			class="form-control" id="username" name="username" ng-model="credentials.username"/>
