@@ -1,11 +1,17 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import model.User;
+import repositories.UserRepository;
+
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -25,9 +31,23 @@ public class LoginController {
 //    return new TriathlonTime(t1, t1, t1, t1, t1);
 //  }
   
+//  @Autowired
+//  UserRepository myRepo;// + setter
+//  
+//  @RequestMapping("/users")
+//  public User user() {
+//    ArrayList<User> users = new ArrayList<User>();
+//    for (User u : myRepo.findAll()) {
+//      users.add(u);
+//    }
+//    
+//    
+//    return myRepo.findOne(1L);
+//  }
+
   @RequestMapping("/user")
   public Principal user(Principal user) {
     return user;
   }
-
+  
 }

@@ -1,5 +1,10 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Project Description.
  * 
@@ -8,9 +13,12 @@ package model;
  * @version October 12, 2016
  */
 
-
+//@Entity
 public class TriathlonTime {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private Time swimTime;
   private Time t1Time;
   private Time bikeTime;

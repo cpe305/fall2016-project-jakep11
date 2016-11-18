@@ -1,25 +1,45 @@
 package com.triathlon;
 
-import static org.junit.Assert.assertEquals;
-
+import model.Time;
 import model.Triathlon;
+import model.TriathlonDistance;
+import model.TriathlonElevation;
+import model.TriathlonTime;
+import model.Triathlon.Temperature;
 import model.Triathlon.WeatherConditions;
 import org.junit.Test;
 
-
+import static org.junit.Assert.*;
 
 import java.util.Date;
 
 
 public class TriathlonTest {
 
-//  @Test
-//  public void testSetWeatherConditions() {
-//    Triathlon triath1 = new Triathlon();
-//    assertEquals(WeatherConditions.SUNNY, triath1.getWeatherConditions());
-//    triath1.setWeatherConditions(WeatherConditions.WINDY);
-//    assertEquals(WeatherConditions.WINDY, triath1.getWeatherConditions());
-//  }
+  @Test
+  public void testSetWeatherConditions() {
+    TriathlonDistance triDist = new TriathlonDistance(500, 12, 3);
+    TriathlonElevation triElev = new TriathlonElevation(500, 100);
+    
+    
+    Date date = new Date(System.currentTimeMillis());
+    
+    Time time1 = new Time(0, 8, 30);
+    Time time2 = new Time(30);
+    Time time3 = new Time(0, 30, 15);
+    Time time4 = new Time(10);
+    Time time5 = new Time(0, 20, 5);
+    TriathlonTime triTime = new TriathlonTime(time1, time2, time3, time4, time5);
+    
+    WeatherConditions weather = WeatherConditions.SUNNY;
+    Temperature temp = Temperature.HOT;
+    
+    Triathlon tri1 = new Triathlon();
+    Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, time1, weather, temp);
+    Triathlon tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, time5, weather, temp);
+    assertNotSame(tri1, tri2);
+    
+  }
 //
 //  @Test
 //  public void testSetElevationChange() {

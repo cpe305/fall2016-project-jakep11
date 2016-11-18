@@ -1,6 +1,15 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class TriathlonDistance {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private double swim;
   private double bike;
   private double run;
@@ -42,9 +51,7 @@ public class TriathlonDistance {
   }
   
   public TriathlonDistance() {
-    this.swim = 0;
-    this.bike = 0;
-    this.run = 0;
+    
   }
   
   public double getSwim() {

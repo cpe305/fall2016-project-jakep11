@@ -2,19 +2,31 @@ package model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+//@Entity
 public class Triathlon {
 
   public enum WeatherConditions {
     SUNNY, WINDY, LIGHT_RAIN, HEAVY_RAIN, DRY, HUMID
   }
-  
+
   public enum Temperature {
     COLD, COOL, MODERATE, WARM, HOT
   }
 
-  
-  private TriathlonDistance distance;
+//  @Id
+//  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private TriathlonElevation elevation;
+  private TriathlonDistance distance;
+
   private TriathlonTime time;
   private String name;
   private String location;
@@ -22,7 +34,7 @@ public class Triathlon {
   private Time startTime;
   private WeatherConditions weather;
   private Temperature temperature;
-  
+
   public WeatherConditions getWeather() {
     return weather;
   }
@@ -38,7 +50,7 @@ public class Triathlon {
   public void setTemperature(Temperature temperature) {
     this.temperature = temperature;
   }
-  
+
   public Date getDate() {
     return date;
   }
@@ -47,6 +59,7 @@ public class Triathlon {
     this.date = date;
   }
 
+  @OneToOne(fetch = FetchType.LAZY, mappedBy = "Triathlon", cascade = CascadeType.ALL)
   public TriathlonDistance getDistance() {
     return distance;
   }
@@ -55,6 +68,7 @@ public class Triathlon {
     this.distance = distance;
   }
 
+  //@OneToOne(fetch = FetchType.LAZY, mappedBy = "Triathlon", cascade = CascadeType.ALL)
   public TriathlonElevation getElevation() {
     return elevation;
   }
@@ -95,9 +109,9 @@ public class Triathlon {
     this.startTime = startTime;
   }
 
-  
 
-    public Triathlon(TriathlonDistance distance, TriathlonElevation elevation, TriathlonTime time,
+
+  public Triathlon(TriathlonDistance distance, TriathlonElevation elevation, TriathlonTime time,
       String name, String location, Date date, Time startTime, WeatherConditions weather,
       Temperature temperature) {
     this.distance = distance;
@@ -111,9 +125,9 @@ public class Triathlon {
     this.temperature = temperature;
   }
 
-    public Triathlon() {
-      
-    }
+  public Triathlon() {
+
+  }
 
 
 }
