@@ -52,6 +52,9 @@ app.controller('addTriathlon', function($scope, $http) {
 	$scope.runElevation = 0;
 	$scope.location = "San Luis Obispo";
 	$scope.date = new Date();
+	$scope.startTime = "7:00 AM";
+	$scope.weather = "Sunny";
+	$scope.temperature = 72.0;
 });
 
 app.controller('statistics', function($scope, $http) {
@@ -61,7 +64,8 @@ app.controller('statistics', function($scope, $http) {
 app.controller('signup', function($scope, $http) {
 	$scope.error = false;
 	$scope.createUser = function() {
-		
+		$rootScope.name = $scope.username;
+		$location.path("/");
 	}
 	
 });
