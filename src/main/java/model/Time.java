@@ -3,6 +3,8 @@ package model;
 
 public class Time {
 
+  final int SEC_PER_HOUR = 3600;
+  
   private int hour;
   private int minute;
   private int second;
@@ -24,7 +26,7 @@ public class Time {
    * @param second time in seconds
    */
   public Time(int second) {
-    this.hour = second / 3600;
+    this.hour = second / SEC_PER_HOUR;
     this.minute = second / 60;
     this.second = second % 60;
   }
@@ -37,27 +39,27 @@ public class Time {
    */
   public void setTime(int newHour, int newMinute, int newSecond) {
     getTimeInSeconds();
-    hour = newHour % 24 + newMinute / 60 + newSecond / 3600;
+    hour = newHour % 24 + newMinute / 60 + newSecond / SEC_PER_HOUR;
     minute = newMinute % 60 + newSecond / 60;
     second = newSecond % 60;
   }
   
   public void setTime(int second) {
-    this.hour = second / 3600;
+    this.hour = second / SEC_PER_HOUR;
     this.minute = (second / 60) % 60;
     this.second = second % 60;
   }
 
   public int getTimeInSeconds() {
-    return 3600 * hour + 60 * minute + second;
+    return SEC_PER_HOUR * hour + 60 * minute + second;
   }
   
   public double getTimeInMinutes() {
-    return 60 * hour + minute + second / 60.0;
+    return 60 * hour + minute + second / (double)60.0;
   }
   
   public double getTimeInHours() {
-    return hour + minute / 60.0 + second / 3600.0;
+    return hour + minute / 60.0 + second / (double)SEC_PER_HOUR;
   }
   
   @Override
