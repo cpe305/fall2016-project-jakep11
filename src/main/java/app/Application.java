@@ -31,6 +31,7 @@ import model.TriathlonTime;
 import model.User;
 import model.Triathlon.Temperature;
 import model.Triathlon.WeatherConditions;
+import repositories.TriathlonRepository;
 //import repositories.TriathlonRepository;
 import repositories.UserRepository;
 
@@ -53,8 +54,8 @@ public class Application {
     // SpringApplication.exit(Application.class, 1);
   }
 
-/*  @Bean
-  public CommandLineRunner demo(UserRepository repository) {
+  @Bean
+  public CommandLineRunner demo(UserRepository repository, TriathlonRepository triRepo) {
     return (args) -> {
       // save a couple of Users
       repository.save(new User("Jack", "Bauer"));
@@ -131,7 +132,7 @@ public class Application {
       
       
     };
-  }*/
+  }
   
   /*@Bean
   public CommandLineRunner demo2(TriathlonRepository repository) {

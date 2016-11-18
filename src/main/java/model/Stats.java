@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 public class Stats {
 
   public static double bikeSpeed(Triathlon tri) {

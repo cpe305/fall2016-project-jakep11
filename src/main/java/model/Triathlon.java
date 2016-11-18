@@ -8,9 +8,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 
-//@Entity
+@Entity
 public class Triathlon {
 
   public enum WeatherConditions {
@@ -21,16 +22,32 @@ public class Triathlon {
     COLD, COOL, MODERATE, WARM, HOT
   }
 
-//  @Id
-//  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  @OneToOne(cascade = CascadeType.ALL)
+//  @JoinTable(
+//      name = "Branch_Merge_Commit",
+//      joinColumns = @JoinColumn(
+//          name = "commit_id", 
+//          referencedColumnName = "id"),
+//      inverseJoinColumns = @JoinColumn(
+//          name = "branch_merge_id", 
+//          referencedColumnName = "id")
+//  )
   private TriathlonElevation elevation;
+  
+  @OneToOne(cascade = CascadeType.ALL)
   private TriathlonDistance distance;
-
+  
+  @OneToOne(cascade = CascadeType.ALL)
   private TriathlonTime time;
+  
   private String name;
   private String location;
   private Date date;
+  
+  @OneToOne(cascade = CascadeType.ALL)
   private Time startTime;
   private WeatherConditions weather;
   private Temperature temperature;
@@ -59,7 +76,7 @@ public class Triathlon {
     this.date = date;
   }
 
-  @OneToOne(fetch = FetchType.LAZY, mappedBy = "Triathlon", cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.LAZY, mappedBy = "Triathlon", cascade = CascadeType.MERGE)
   public TriathlonDistance getDistance() {
     return distance;
   }
@@ -68,7 +85,7 @@ public class Triathlon {
     this.distance = distance;
   }
 
-  //@OneToOne(fetch = FetchType.LAZY, mappedBy = "Triathlon", cascade = CascadeType.ALL)
+  //@OneToOne(fetch = FetchType.LAZY, mappedBy = "Triathlon", cascade = CascadeType.MERGE)
   public TriathlonElevation getElevation() {
     return elevation;
   }
