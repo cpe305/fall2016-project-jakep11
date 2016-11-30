@@ -52,6 +52,10 @@ public class Triathlon {
   private WeatherConditions weather;
   private Temperature temperature;
 
+  public Long getID() {
+    return id;
+  }
+  
   public WeatherConditions getWeather() {
     return weather;
   }

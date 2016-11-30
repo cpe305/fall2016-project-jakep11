@@ -25,6 +25,12 @@ public class Time {
     this.minute = minute;
     this.second = second;
   }
+  
+  public Time() {
+    this.hour = 0;
+    this.minute = 0;
+    this.second = 0;
+  }
 
   /**
    * Time constructor.
