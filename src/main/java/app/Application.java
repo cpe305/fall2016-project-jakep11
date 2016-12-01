@@ -119,7 +119,8 @@ public class Application {
           new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, time1, weather, temp);
       Triathlon tri3 =
           new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, time5, weather, temp);
-
+      Triathlon tri4 = new Triathlon();
+      Triathlon tri5 = new Triathlon();
       log.info("After tri init2");
 
 
@@ -128,6 +129,8 @@ public class Application {
 
       triRepo.save(tri2);
       log.info("After tri 2");
+      triRepo.save(tri4);
+      triRepo.save(tri5);
 
       // triRepo.save(tri3);
       log.info("After tri 3");
@@ -166,6 +169,9 @@ public class Application {
 
       user.addTri(tri.getID());
       user.addTri(tri2.getID());
+      user.addTri(tri4.getID());
+      repository.save(user);
+      System.out.println(user);
       for (Long l : user.getTris()) {
         log.info(l.toString());
       }

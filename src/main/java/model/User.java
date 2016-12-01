@@ -26,7 +26,7 @@ public class User {
 
   public User(String username, String password) {
     this.username = username;
-    //this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    // this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     this.password = password;
     triathlons = new ArrayList<Long>();
   }
@@ -42,18 +42,19 @@ public class User {
   public void addTri(long id) {
     triathlons.add(id);
   }
-  
+
   public ArrayList<Long> getTris() {
     return triathlons;
   }
-  
+
   public Long getId() {
     return id;
   }
-  
+
   @Override
   public String toString() {
-    return String.format("User[id=%d, userName='%s', password='%s']", id, username, password);
+    return String.format("User[id=%d, userName='%s', password='%s', numTris='%s']", id, username,
+        password, triathlons.size());
   }
 
   public String getPassword() {

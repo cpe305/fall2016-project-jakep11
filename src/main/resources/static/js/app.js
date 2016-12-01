@@ -37,13 +37,20 @@ app.controller('triathlonList', function($scope, $http, $rootScope) {
 	//$scope.triathlons = ["a", "b", "c"];
 	$scope.triathlons = $rootScope.triathlonList;
 	console.log($rootScope.triathlonList);
-//	$http.get('/triathlons/').success(function(data) {
-//		$scope.triathlons = data;
-//	})
-	$http.get('/users/').success(function(data) {
-		$scope.users = data;
-		console.log(data);
+	$http({
+	    method: 'GET',
+	    url: 'triathlons',
+	    //transformRequest: myTransformRequest,
+	    params: { "username": $rootScope.name}
+	    //data: {username: $scope.credentials.username, password: $scope.credentials.password}
+	}).success(function(data) {
+		$scope.triathlons = data;
 	})
+	
+//	$http.get('/users/').success(function(data) {
+//		$scope.users = data;
+//		console.log(data);
+//	})
 });
 
 function Triathlon(name, distance, bikeElev, runElev, location, date, startTime, temperature) {
@@ -55,6 +62,12 @@ function Triathlon(name, distance, bikeElev, runElev, location, date, startTime,
 	this.date = date;
 	this.startTime = startTime;
 	this.temperature = temperature;
+}
+function myTransformRequest(obj) {
+    var str = [];
+    for(var p in obj)
+    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    return str.join("&");
 }
 
 app.controller('addTriathlon', function($scope, $http, $rootScope) {
@@ -91,12 +104,7 @@ app.controller('createAccount', function($scope, $http, $rootScope, $location) {
 		    method: 'POST',
 		    url: 'createUser',
 		    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-		    transformRequest: function(obj) {
-		        var str = [];
-		        for(var p in obj)
-		        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-		        return str.join("&");
-		    },
+		    transformRequest: myTransformRequest,
 		    data: {username: $scope.credentials.username, password: $scope.credentials.password}
 		}).then(function (response) {
 			console.log("successful sign up");
