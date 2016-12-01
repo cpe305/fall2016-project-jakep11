@@ -10,10 +10,9 @@ import javax.persistence.Id;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import app.PasswordMatches;
 
 @Entity
-@PasswordMatches
+
 public class User {
 
   @Id

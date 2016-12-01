@@ -64,7 +64,7 @@ public class Application {
       repository.save(new User("Kim", "Bauer"));
       repository.save(new User("David", "Palmer"));
       repository.save(new User("Michelle", "Dessler"));
-      repository.save(new User("Jake", "Pickett"));
+      repository.save(new User("Jake", BCrypt.hashpw("Pickett", BCrypt.gensalt())));
       repository.save(new User("admin", BCrypt.hashpw("password", BCrypt.gensalt())));
 
       // fetch all Users
@@ -85,8 +85,9 @@ public class Application {
       // fetch Users by last name
       log.info("User found with findByUsername('Jake'):");
       log.info("--------------------------------------------");
-      for (User bauer : repository.findByUsername("Bauer")) {
-        log.info(bauer.toString());
+      for (User jake : repository.findByUsername("Jake")) {
+        log.info(jake.toString());
+        user = jake;
       }
       log.info("");
 
@@ -180,24 +181,27 @@ public class Application {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       http.httpBasic().and().logout().and().authorizeRequests()
-          .antMatchers("/index.html", "/home.html", "/signup.html", "/login.html", "/").permitAll()
+          .antMatchers("/loginPage.html", "/createUser", "/login", "/index.html", "/home.html", "/signup.html", "/login.html", "/createAccount.html", "/").permitAll()
           .anyRequest().authenticated().and()
           .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
           .csrfTokenRepository(csrfTokenRepository());
     }
 
-    /*@Autowired
+    @Autowired
     private MyUserDetailsService userDetailsService;
+    @Autowired
+    private CustomAuthenticationProvider authProvider;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
       auth.userDetailsService(userDetailsService);
-    }*/
+      auth.authenticationProvider(authProvider);
+    }
 
-    @Autowired
+    /*@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
       auth.inMemoryAuthentication().withUser("admin").password("password").roles("USER");
-    }
+    }*/
 
     private CsrfTokenRepository csrfTokenRepository() {
       HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();

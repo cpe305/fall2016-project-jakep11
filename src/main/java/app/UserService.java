@@ -20,20 +20,23 @@ public class UserService implements IUserService{
   public User registerNewUserAccount(String username, String password){
 
     User user = new User(username, password);
-    /*user.setFirstName(accountDto.getFirstName());
-    user.setLastName(accountDto.getLastName());
-    user.setPassword(accountDto.getPassword());
-    user.setEmail(accountDto.getEmail());
-    user.setRoles(Arrays.asList("ROLE_USER"));*/
+    
+    if (usernameExists(username)) {
+      return null;
+    }
+    
     System.out.println("Trying to register a new user from UserService Class");
     return repository.save(user);
   }
 
-  private boolean emailExist(String email) {
-    User user = repository.findByUsername(email).get(0);
-    if (user != null) {
+  private boolean usernameExists(String username) {
+    System.out.println("checking if username exists");
+    if (repository.findByUsername(username).size() > 0) {
+      System.out.println("username exists");
       return true;
     }
+    System.out.println("username does not exists");
+
     return false;
   }
 }

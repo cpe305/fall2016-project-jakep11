@@ -7,11 +7,11 @@ app
 				templateUrl : 'home.html',
 				controller : 'home'
 			}).when('/login', {
-				templateUrl : 'login.html',
+				templateUrl : 'loginPage.html',
 				controller : 'navigation'
-			}).when('/signup', {
-				templateUrl : 'signup.html',
-				controller : 'signup'
+			}).when('/createAccount', {
+				templateUrl : 'createAccount.html',
+				controller : 'createAccount'
 			}).when('/triathlonList', {
 				templateUrl : 'triathlonList.html',
 				controller : 'triathlonList'
@@ -24,7 +24,7 @@ app
 			}).otherwise('/');
 
 			$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-
+			$httpProvider.defaults.headers.common["Content-Type"] = "application/x-www-form-urlencoded";
 		});
 
 app.controller('home', function($scope, $http) {
@@ -79,31 +79,45 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 	$scope.triathlons = $rootScope.triathlonList;
 });
 
-//app.controller('createAccount', function($scope, ))
-
-app.controller('signup', function($scope, $http, $rootScope) {
-	console.log("signup controller");
-	//$scope.error = false;
-	//$scope.credentials = {};
-	/*$scope.createUser = function() {
-		$http.post('signup',
-			{
-				username: $scope.credentials.username,
-				password: $scope.credentials.password
-			}
-		).then(function (data) {
+app.controller('createAccount', function($scope, $http, $rootScope, $location) {
+	console.log("create account");
+	$scope.error = false;
+	$scope.credentials = {};
+	
+	
+	$scope.createUser = function() {
+		
+		$http({
+		    method: 'POST',
+		    url: 'createUser',
+		    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		    transformRequest: function(obj) {
+		        var str = [];
+		        for(var p in obj)
+		        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		        return str.join("&");
+		    },
+		    data: {username: $scope.credentials.username, password: $scope.credentials.password}
+		}).then(function (response) {
 			console.log("successful sign up");
+			$rootScope.authenticated = true;
+//			console.log(data);
+//			console.log(data.username);
+			$rootScope.name = response.data.username;
+			$location.path("/");
+			$scope.error = false;
 		},
 		function (error) {
 			console.log("failed to sign up");
+			$rootScope.authenticated = false;
+			$scope.error = true;
 		}
 		);
 		
 		
-	};*/
-	
-	
-});
+	};
+})
+
 
 app.controller('navigation', function($rootScope, $scope, $http, $location) {
 
@@ -121,7 +135,7 @@ app.controller('navigation', function($rootScope, $scope, $http, $location) {
 		$http.get('user', {
 			headers : headers
 		}).success(function(data) {
-			console.log("oculdn't get user");
+			console.log("successfully got user");
 			if (data.name) {
 				$rootScope.authenticated = true;
 				$rootScope.name = data.name;
