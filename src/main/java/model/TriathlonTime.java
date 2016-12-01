@@ -1,9 +1,11 @@
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * Project Description.
@@ -13,16 +15,21 @@ import javax.persistence.Id;
  * @version October 12, 2016
  */
 
-//@Entity
+@Entity
 public class TriathlonTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  @OneToOne(cascade = CascadeType.ALL)
   private Time swimTime;
+  @OneToOne(cascade = CascadeType.ALL)
   private Time t1Time;
+  @OneToOne(cascade = CascadeType.ALL)
   private Time bikeTime;
+  @OneToOne(cascade = CascadeType.ALL)
   private Time t2Time;
+  @OneToOne(cascade = CascadeType.ALL)
   private Time runTime;
 
   /**

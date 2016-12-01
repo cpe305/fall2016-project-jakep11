@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -31,7 +32,8 @@ import model.TriathlonTime;
 import model.User;
 import model.Triathlon.Temperature;
 import model.Triathlon.WeatherConditions;
-//import repositories.TriathlonRepository;
+import repositories.TriathlonRepository;
+// import repositories.TriathlonRepository;
 import repositories.UserRepository;
 
 @SpringBootApplication
@@ -53,15 +55,17 @@ public class Application {
     // SpringApplication.exit(Application.class, 1);
   }
 
-/*  @Bean
-  public CommandLineRunner demo(UserRepository repository) {
+  @Bean
+  public CommandLineRunner demo(UserRepository repository, TriathlonRepository triRepo) {
     return (args) -> {
       // save a couple of Users
-      repository.save(new User("Jack", "Bauer"));
+      Long bauerID = repository.save(new User("Bauer", "Bauer")).getId();
       repository.save(new User("Chloe", "O'Brian"));
       repository.save(new User("Kim", "Bauer"));
       repository.save(new User("David", "Palmer"));
       repository.save(new User("Michelle", "Dessler"));
+      repository.save(new User("Jake", BCrypt.hashpw("Pickett", BCrypt.gensalt())));
+      repository.save(new User("admin", BCrypt.hashpw("password", BCrypt.gensalt())));
 
       // fetch all Users
       log.info("Users found with findAll():");
@@ -79,38 +83,59 @@ public class Application {
       log.info("");
 
       // fetch Users by last name
-      log.info("User found with findByLastName('Bauer'):");
+      log.info("User found with findByUsername('Jake'):");
       log.info("--------------------------------------------");
-      for (User bauer : repository.findByLastName("Bauer")) {
-        log.info(bauer.toString());
+      for (User jake : repository.findByUsername("Jake")) {
+        log.info(jake.toString());
+        user = jake;
       }
       log.info("");
-      
-      
+
+      // Test adding Tris to a user and removing them
+
+
+
+      log.info("before tri init");
       TriathlonDistance triDist = new TriathlonDistance(500, 12, 3);
       TriathlonElevation triElev = new TriathlonElevation(500, 100);
-      
-      
+      // triRepo.save(triElev);
+      log.info("After tri init");
+
+
       Date date = new Date(System.currentTimeMillis());
-      
+
       Time time1 = new Time(0, 8, 30);
       Time time2 = new Time(30);
       Time time3 = new Time(0, 30, 15);
       Time time4 = new Time(10);
       Time time5 = new Time(0, 20, 5);
       TriathlonTime triTime = new TriathlonTime(time1, time2, time3, time4, time5);
-      
+
       WeatherConditions weather = WeatherConditions.SUNNY;
       Temperature temp = Temperature.HOT;
-      
+
       Triathlon tri1 = new Triathlon();
-      Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, time1, weather, temp);
-      Triathlon tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, time5, weather, temp);
+      Triathlon tri2 =
+          new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, time1, weather, temp);
+      Triathlon tri3 =
+          new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, time5, weather, temp);
+
+      log.info("After tri init2");
+
 
       triRepo.save(tri1);
+      log.info("After tri 1");
+
       triRepo.save(tri2);
-      triRepo.save(tri3);
-      
+      log.info("After tri 2");
+
+      // triRepo.save(tri3);
+      log.info("After tri 3");
+
+
+
+      log.info("After tri init3");
+
 
       // fetch all Users
       log.info("Tris found with findAll():");
@@ -126,66 +151,27 @@ public class Application {
       log.info("--------------------------------");
       log.info(tri.toString());
       log.info("");
-      
-      
-      
-      
-    };
-  }*/
-  
-  /*@Bean
-  public CommandLineRunner demo2(TriathlonRepository repository) {
-    return (args) -> {
-      TriathlonDistance triDist = new TriathlonDistance(500, 12, 3);
-      TriathlonElevation triElev = new TriathlonElevation(500, 100);
-      
-      
-      Date date = new Date(System.currentTimeMillis());
-      
-      Time time1 = new Time(0, 8, 30);
-      Time time2 = new Time(30);
-      Time time3 = new Time(0, 30, 15);
-      Time time4 = new Time(10);
-      Time time5 = new Time(0, 20, 5);
-      TriathlonTime triTime = new TriathlonTime(time1, time2, time3, time4, time5);
-      
-      WeatherConditions weather = WeatherConditions.SUNNY;
-      Temperature temp = Temperature.HOT;
-      
-      Triathlon tri1 = new Triathlon();
-      Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, time1, weather, temp);
-      Triathlon tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, time5, weather, temp);
 
-      // save a couple of Users
-      repository.save(tri1);
-      repository.save(tri2);
-      repository.save(tri3);
-      
 
-      // fetch all Users
-      log.info("Tris found with findAll():");
-      log.info("-------------------------------");
-      for (Triathlon tri : repository.findAll()) {
-        log.info(tri.toString());
+      log.info("After tri init4");
+
+
+      // Test adding Tris to a user and removing them
+      /*
+       * log.info(tri.getID().toString()); log.info("split");
+       * 
+       * log.info(tri2.getID().toString());
+       */
+
+
+      user.addTri(tri.getID());
+      user.addTri(tri2.getID());
+      for (Long l : user.getTris()) {
+        log.info(l.toString());
       }
-      log.info("");
 
-      // fetch an individual User by ID
-      Triathlon tri = repository.findOne(1L);
-      log.info("Tri found with findOne(1L):");
-      log.info("--------------------------------");
-      log.info(tri.toString());
-      log.info("");
-
-//      // fetch Users by last name
-//      log.info("User found with findByLastName('Bauer'):");
-//      log.info("--------------------------------------------");
-//      for (User bauer : repository.findByLastName("Bauer")) {
-//        log.info(bauer.toString());
-//      }
-//      log.info("");
     };
-  }*/
+  }
 
 
 
@@ -195,15 +181,27 @@ public class Application {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       http.httpBasic().and().logout().and().authorizeRequests()
-          .antMatchers("/index.html", "/home.html", "/login.html", "/signup.html", "/").permitAll().anyRequest()
-          .authenticated().and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
+          .antMatchers("/loginPage.html", "/createUser", "/login", "/index.html", "/home.html", "/signup.html", "/login.html", "/createAccount.html", "/").permitAll()
+          .anyRequest().authenticated().and()
+          .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
           .csrfTokenRepository(csrfTokenRepository());
     }
 
     @Autowired
+    private MyUserDetailsService userDetailsService;
+    @Autowired
+    private CustomAuthenticationProvider authProvider;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+      auth.userDetailsService(userDetailsService);
+      auth.authenticationProvider(authProvider);
+    }
+
+    /*@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
       auth.inMemoryAuthentication().withUser("admin").password("password").roles("USER");
-    }
+    }*/
 
     private CsrfTokenRepository csrfTokenRepository() {
       HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();

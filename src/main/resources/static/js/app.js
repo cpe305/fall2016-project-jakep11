@@ -7,11 +7,11 @@ app
 				templateUrl : 'home.html',
 				controller : 'home'
 			}).when('/login', {
-				templateUrl : 'login.html',
+				templateUrl : 'loginPage.html',
 				controller : 'navigation'
-			}).when('/signup', {
-				templateUrl : 'signup.html',
-				controller : 'signup'
+			}).when('/createAccount', {
+				templateUrl : 'createAccount.html',
+				controller : 'createAccount'
 			}).when('/triathlonList', {
 				templateUrl : 'triathlonList.html',
 				controller : 'triathlonList'
@@ -24,7 +24,7 @@ app
 			}).otherwise('/');
 
 			$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-
+			$httpProvider.defaults.headers.common["Content-Type"] = "application/x-www-form-urlencoded";
 		});
 
 app.controller('home', function($scope, $http) {
@@ -33,9 +33,10 @@ app.controller('home', function($scope, $http) {
 	})
 });
 
-app.controller('triathlonList', function($scope, $http) {
+app.controller('triathlonList', function($scope, $http, $rootScope) {
 	//$scope.triathlons = ["a", "b", "c"];
-	$scope.triathlons = null;
+	$scope.triathlons = $rootScope.triathlonList;
+	console.log($rootScope.triathlonList);
 //	$http.get('/triathlons/').success(function(data) {
 //		$scope.triathlons = data;
 //	})
@@ -45,8 +46,19 @@ app.controller('triathlonList', function($scope, $http) {
 	})
 });
 
-app.controller('addTriathlon', function($scope, $http) {
-	$scope.name = "Name";
+function Triathlon(name, distance, bikeElev, runElev, location, date, startTime, temperature) {
+	this.name = name; 
+	this.distance = distance;
+	this.bikeElev = bikeElev;
+	this.runElev = runElev;
+	this.location = location;
+	this.date = date;
+	this.startTime = startTime;
+	this.temperature = temperature;
+}
+
+app.controller('addTriathlon', function($scope, $http, $rootScope) {
+	$scope.name = "Namasdfe";
 	$scope.distance = "Olympic";
 	$scope.bikeElevation = 0;
 	$scope.runElevation = 0;
@@ -55,20 +67,57 @@ app.controller('addTriathlon', function($scope, $http) {
 	$scope.startTime = "7:00 AM";
 	$scope.weather = "Sunny";
 	$scope.temperature = 72.0;
-});
-
-app.controller('statistics', function($scope, $http) {
-	$scope.triathlons = null;
-});
-
-app.controller('signup', function($scope, $http) {
-	$scope.error = false;
-	$scope.createUser = function() {
-		$rootScope.name = $scope.username;
-		$location.path("/");
+	
+	$scope.addTriathlon = function() {
+		var tri = new Triathlon($scope.name, $scope.distance, $scope.bikeElev, $scope.runElev, $scope.location, $scope.date, $scope.startTime, $scope.temperature);
+		$rootScope.triathlonList = [tri];
 	}
 	
 });
+
+app.controller('statistics', function($scope, $http, $rootScope) {
+	$scope.triathlons = $rootScope.triathlonList;
+});
+
+app.controller('createAccount', function($scope, $http, $rootScope, $location) {
+	console.log("create account");
+	$scope.error = false;
+	$scope.credentials = {};
+	
+	
+	$scope.createUser = function() {
+		
+		$http({
+		    method: 'POST',
+		    url: 'createUser',
+		    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		    transformRequest: function(obj) {
+		        var str = [];
+		        for(var p in obj)
+		        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		        return str.join("&");
+		    },
+		    data: {username: $scope.credentials.username, password: $scope.credentials.password}
+		}).then(function (response) {
+			console.log("successful sign up");
+			$rootScope.authenticated = true;
+//			console.log(data);
+//			console.log(data.username);
+			$rootScope.name = response.data.username;
+			$location.path("/");
+			$scope.error = false;
+		},
+		function (error) {
+			console.log("failed to sign up");
+			$rootScope.authenticated = false;
+			$scope.error = true;
+		}
+		);
+		
+		
+	};
+})
+
 
 app.controller('navigation', function($rootScope, $scope, $http, $location) {
 
@@ -86,6 +135,7 @@ app.controller('navigation', function($rootScope, $scope, $http, $location) {
 		$http.get('user', {
 			headers : headers
 		}).success(function(data) {
+			console.log("successfully got user");
 			if (data.name) {
 				$rootScope.authenticated = true;
 				$rootScope.name = data.name;
@@ -95,6 +145,7 @@ app.controller('navigation', function($rootScope, $scope, $http, $location) {
 			}
 			callback && callback();
 		}).error(function() {
+			console.log("failed");
 			$rootScope.authenticated = false;
 			callback && callback();
 		});
@@ -119,6 +170,7 @@ app.controller('navigation', function($rootScope, $scope, $http, $location) {
 		$http.post('logout', {}).success(function() {
 			$rootScope.authenticated = false;
 			$rootScope.name = null;
+			$rootScope.triathlonList = null;
 			$location.path("/");
 		}).error(function(data) {
 			$rootScope.authenticated = false;
