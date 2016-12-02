@@ -53,10 +53,7 @@ public class Application {
    * @param args not used
    */
   public static void main(String[] args) {
-    // Making a change
-    SpringApplication.run(Application.class, args);
-    // ((ConfigurableApplicationContext)appCtx).close();
-    // SpringApplication.exit(Application.class, 1);
+    SpringApplication.run(Application.class, args); //NOSONAR
   }
 
   /**
