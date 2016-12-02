@@ -60,7 +60,9 @@ public class Stats {
     double count = 0;
 
     for (Triathlon t : triathlons) {
-      if (t.getTime() == null) continue;
+      if (t.getTime() == null)  {
+        continue;
+      }
       swimT.setTime(t.getTime().getSwimTime().getTimeInSeconds() + swimT.getTimeInSeconds());
       count++;
     }
@@ -87,7 +89,9 @@ public class Stats {
     double count = 0;
 
     for (Triathlon t : triathlons) {
-      if (t.getTime() == null) continue;
+      if (t.getTime() == null) {
+        continue;
+      }
       bikeT.setTime(t.getTime().getBikeTime().getTimeInSeconds() + bikeT.getTimeInSeconds());
 
       count++;
@@ -116,7 +120,9 @@ public class Stats {
     double count = 0;
 
     for (Triathlon t : triathlons) {
-      if (t.getTime() == null) continue;
+      if (t.getTime() == null) {
+        continue;
+      }
       runT.setTime(t.getTime().getRunTime().getTimeInSeconds() + runT.getTimeInSeconds());
       count++;
     }

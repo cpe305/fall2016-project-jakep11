@@ -1,27 +1,26 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import model.Time;
+import model.Triathlon;
+import model.Triathlon.WeatherConditions;
+import model.TriathlonDistance;
+import model.TriathlonElevation;
+import model.TriathlonTime;
+import model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import model.Time;
-import model.Triathlon;
-import model.TriathlonDistance;
-import model.TriathlonElevation;
-import model.TriathlonTime;
-import model.User;
-import model.Triathlon.WeatherConditions;
+
 import repositories.TriathlonRepository;
 import repositories.UserRepository;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 
 @RestController
 public class TriathlonController {
@@ -32,6 +31,11 @@ public class TriathlonController {
   @Autowired
   UserRepository userRepo;// + setter
 
+  /**
+   * getTriathlonsForUser gets all triathlons for the logged in user.
+   * @param username unique username
+   * @return returns all triathlons
+   */
   @RequestMapping("/triathlons")
   public List<Triathlon> getTriathlonsForUser(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
@@ -50,21 +54,28 @@ public class TriathlonController {
     return tris;
   }
 
-  // this.name = name;
-  // this.swimDist = distance.swim;
-  // this.bikeDist = distance.bike;
-  // this.runDist = distance.run;
-  // this.swimTime = time.swim;
-  // this.bikeTime = time.bike;
-  // this.runTime = time.run;
-  // this.bikeElev = bikeElev;
-  // this.runElev = runElev;
-  // this.location = location;
-  // this.date = date;
-  // this.startTime = startTime;
-  // this.temperature = temperature;
-  // this.username = username;
 
+  /**
+   * addTriathlon adds a new triathlon to the database for a specific user.
+   * @param name name
+   * @param swimDist swimDist
+   * @param bikeDist bikeDist
+   * @param runDist runDist
+   * @param swimTime swimTime
+   * @param t1Time t1Time
+   * @param bikeTime bikeTime
+   * @param t2Time t2Time
+   * @param runTime runTime
+   * @param bikeElev bikeElev
+   * @param runElev runElev
+   * @param location location
+   * @param date date
+   * @param startTime startTime
+   * @param weather weather
+   * @param temperature temperature
+   * @param username username
+   * @return returns the added Triathlon
+   */
   @RequestMapping("/addTri")
   public Triathlon addTriathlon(@RequestParam(value = "name") String name,
       @RequestParam(value = "swimDist") double swimDist,
@@ -92,12 +103,12 @@ public class TriathlonController {
         startTime, WeatherConditions.valueOf(weather), temperature);
     System.out.println(username);
     System.out.println(bikeElev);
-    System.out.println(newTri.getID());
+    System.out.println(newTri.getId());
 
     newTri = triRepo.save(newTri);
     User user = userRepo.findByUsername(username).get(0);
-    System.out.println(newTri.getID());
-    user.addTri(newTri.getID());
+    System.out.println(newTri.getId());
+    user.addTri(newTri.getId());
     userRepo.save(user);
     return newTri;
   }

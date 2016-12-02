@@ -1,11 +1,10 @@
 package repositories;
 
-import java.util.List;
+import model.Triathlon;
 
 import org.springframework.data.repository.CrudRepository;
 
-import model.Triathlon;
-import model.User;
+import java.util.List;
 
 public interface TriathlonRepository extends CrudRepository<Triathlon, Long> {
 

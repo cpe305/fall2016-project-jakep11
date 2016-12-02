@@ -1,7 +1,6 @@
 package app;
 
-import java.util.ArrayList;
-import java.util.List;
+import model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,8 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import model.User;
 import repositories.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -21,7 +22,11 @@ public class MyUserDetailsService implements UserDetailsService {
   @Autowired
   private UserRepository userRepository;
 
-  //This class allows you to log in
+
+  /** 
+   * UserDetails method that helps authentication during log in.
+   * 
+   */
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     System.out.println("Trying to log in a user from MyUserDetailsService Class");
 
@@ -32,7 +37,7 @@ public class MyUserDetailsService implements UserDetailsService {
       System.out.println("No user found with username: " + username);
       throw new UsernameNotFoundException("No user found with username: " + username);
     }
-    
+
     System.out.println("found one");
     User user = users.get(0);
     System.out.println("Password already saved:" + user.getPassword());
@@ -45,9 +50,6 @@ public class MyUserDetailsService implements UserDetailsService {
     boolean accountNonLocked = true;
     System.out.println("Right before 'return'");
 
-    /*return new org.springframework.security.core.userdetails.User(user.getUsername(),
-        user.getPassword().toLowerCase(), enabled, accountNonExpired, credentialsNonExpired,
-        accountNonLocked, getAuthorities(user.getRoles()));*/
     return new org.springframework.security.core.userdetails.User(user.getUsername(),
         user.getPassword().toLowerCase(), enabled, accountNonExpired, credentialsNonExpired,
         accountNonLocked, getAuthorities(user.getRoles()));

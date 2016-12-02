@@ -1,7 +1,6 @@
 package app;
 
-import java.util.List;
-import java.util.ArrayList;
+import model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,8 +10,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
-import model.User;
 import repositories.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -29,7 +30,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     System.out.println(username);
     System.out.println(password);
 
-    boolean isValidUser = true;
     List<User> users = userRepo.findByUsername(username);
     if (users.size() < 1) {
       return null;
@@ -41,14 +41,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
       return null;
     }
 
-    if (isValidUser) {
-      System.out.println("IS VALID USER");
+    // use the credentials and authenticate against the third-party system
+    return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
 
-      // use the credentials and authenticate against the third-party system
-      return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
-    } else {
-      return null;
-    }
   }
 
   @Override

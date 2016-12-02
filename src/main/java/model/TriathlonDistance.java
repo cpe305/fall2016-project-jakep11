@@ -13,13 +13,17 @@ public class TriathlonDistance {
   private double swim;
   private double bike;
   private double run;
-  
+
   public enum StandardDistance {
     SPRINT, OLYMPIC, HALFIRON, IRON
   }
-  
-  public TriathlonDistance (StandardDistance d) {
-    switch (d) {
+
+  /**
+   * TriathlonDistance creates a default distance of a triathlon.
+   * @param dist distance of triathlon
+   */
+  public TriathlonDistance(StandardDistance dist) {
+    switch (dist) {
       case SPRINT:
         this.swim = 750;
         this.bike = 12.1;
@@ -40,20 +44,27 @@ public class TriathlonDistance {
         this.bike = 112;
         this.run = 26.2;
         break;
-          
+      default:
+        break;
     }
   }
-  
+
+  /**
+   * TriathlonDistance constructor.
+   * @param swim swim
+   * @param bike bike
+   * @param run run
+   */
   public TriathlonDistance(double swim, double bike, double run) {
     this.swim = swim;
     this.bike = bike;
     this.run = run;
   }
-  
+
   public TriathlonDistance() {
-    
+
   }
-  
+
   public double getSwim() {
     return swim;
   }
@@ -78,7 +89,7 @@ public class TriathlonDistance {
     this.run = run;
   }
 
-  
+
   @Override
   public boolean equals(Object obj) {
     if (obj == null) {
@@ -88,7 +99,7 @@ public class TriathlonDistance {
       return false;
     }
     TriathlonDistance triDist = (TriathlonDistance) obj;
-    
+
     return swim == triDist.getSwim() && bike == triDist.getBike() && run == triDist.getRun();
   }
 }

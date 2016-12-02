@@ -1,10 +1,9 @@
 package app;
 
-import javax.persistence.EntityExistsException;
-
 import model.User;
 
+import javax.persistence.EntityExistsException;
+
 public interface IUserService {
-  User registerNewUserAccount(String username, String password)     
-    throws EntityExistsException;
+  User registerNewUserAccount(String username, String password) throws EntityExistsException;
 }

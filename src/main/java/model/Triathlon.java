@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -23,15 +22,6 @@ public class Triathlon {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @OneToOne(cascade = CascadeType.ALL)
-//  @JoinTable(
-//      name = "Branch_Merge_Commit",
-//      joinColumns = @JoinColumn(
-//          name = "commit_id", 
-//          referencedColumnName = "id"),
-//      inverseJoinColumns = @JoinColumn(
-//          name = "branch_merge_id", 
-//          referencedColumnName = "id")
-//  )
   private TriathlonElevation elevation;
   
   @OneToOne(cascade = CascadeType.ALL)
@@ -49,7 +39,7 @@ public class Triathlon {
   private WeatherConditions weather;
   private double temperature;
 
-  public Long getID() {
+  public Long getId() {
     return id;
   }
   
@@ -129,6 +119,18 @@ public class Triathlon {
 
 
 
+  /**
+   * Triathlon constructor.
+   * @param distance distance
+   * @param elevation elevation
+   * @param time time
+   * @param name name
+   * @param location location
+   * @param date date
+   * @param startTime startTime
+   * @param weather weather
+   * @param temperature temperature
+   */
   public Triathlon(TriathlonDistance distance, TriathlonElevation elevation, TriathlonTime time,
       String name, String location, Date date, String startTime, WeatherConditions weather,
       double temperature) {

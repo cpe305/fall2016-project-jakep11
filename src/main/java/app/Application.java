@@ -1,7 +1,12 @@
 package app;
 
-
-import java.util.Date;
+import model.Time;
+import model.Triathlon;
+import model.Triathlon.WeatherConditions;
+import model.TriathlonDistance;
+import model.TriathlonElevation;
+import model.TriathlonTime;
+import model.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,16 +29,11 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
-import model.Time;
-import model.Triathlon;
-import model.TriathlonDistance;
-import model.TriathlonElevation;
-import model.TriathlonTime;
-import model.User;
-import model.Triathlon.WeatherConditions;
 import repositories.TriathlonRepository;
-// import repositories.TriathlonRepository;
 import repositories.UserRepository;
+
+import java.util.Date;
+
 
 @SpringBootApplication
 @ComponentScan(basePackages = "controller")
@@ -47,6 +47,11 @@ public class Application {
 
   private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+  /**
+   * main runs the program.
+   * 
+   * @param args not used
+   */
   public static void main(String[] args) {
     // Making a change
     SpringApplication.run(Application.class, args);
@@ -54,6 +59,13 @@ public class Application {
     // SpringApplication.exit(Application.class, 1);
   }
 
+  /**
+   * CommandLineRunner populates the database with initial values.
+   * 
+   * @param repository userRepository
+   * @param triRepo triathlonRepository
+   * @return nothing
+   */
   @Bean
   public CommandLineRunner demo(UserRepository repository, TriathlonRepository triRepo) {
     return (args) -> {
@@ -108,31 +120,13 @@ public class Application {
       WeatherConditions weather = WeatherConditions.SUNNY;
       double temp = 75;
 
-      //Triathlon tri1 = new Triathlon();
-      Triathlon tri2 =
-          new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, "7:00AM", weather, temp);
-      Triathlon tri3 =
-          new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "7:00AM", weather, temp);
-//      Triathlon tri4 = new Triathlon();
-//      Triathlon tri5 = new Triathlon(); 
-      log.info("After tri init2");
-
-
-      //triRepo.save(tri1);
-      log.info("After tri 1");
+      Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, "7:00AM",
+          weather, temp);
+      // Triathlon tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date,
+      // "7:00AM",
+      // weather, temp);
 
       triRepo.save(tri2);
-      log.info("After tri 2");
-//      triRepo.save(tri4);
-//      triRepo.save(tri5);
-
-      // triRepo.save(tri3);
-      log.info("After tri 3");
-
-
-
-      log.info("After tri init3");
-
 
       // fetch all Users
       log.info("Tris found with findAll():");
@@ -153,17 +147,9 @@ public class Application {
       log.info("After tri init4");
 
 
-      // Test adding Tris to a user and removing them
-      /*
-       * log.info(tri.getID().toString()); log.info("split");
-       * 
-       * log.info(tri2.getID().toString());
-       */
 
-
-      user.addTri(tri.getID());
-      user.addTri(tri2.getID());
-      //user.addTri(tri4.getID());
+      user.addTri(tri.getId());
+      user.addTri(tri2.getId());
       repository.save(user);
       System.out.println(user);
       for (Long l : user.getTris()) {
@@ -181,8 +167,9 @@ public class Application {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       http.httpBasic().and().logout().and().authorizeRequests()
-          .antMatchers("/loginPage.html", "/createUser", "/login", "/index.html", "/home.html", "/signup.html", "/login.html", "/createAccount.html", "/").permitAll()
-          .anyRequest().authenticated().and()
+          .antMatchers("/loginPage.html", "/createUser", "/login", "/index.html", "/home.html",
+              "/signup.html", "/login.html", "/createAccount.html", "/")
+          .permitAll().anyRequest().authenticated().and()
           .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
           .csrfTokenRepository(csrfTokenRepository());
     }
@@ -198,10 +185,10 @@ public class Application {
       auth.authenticationProvider(authProvider);
     }
 
-    /*@Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-      auth.inMemoryAuthentication().withUser("admin").password("password").roles("USER");
-    }*/
+    /*
+     * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+     * auth.inMemoryAuthentication().withUser("admin").password("password").roles("USER"); }
+     */
 
     private CsrfTokenRepository csrfTokenRepository() {
       HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();

@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 
 @Entity
 
@@ -24,9 +22,13 @@ public class User {
 
   protected User() {}
 
+  /**
+   * User constructor.
+   * @param username unique username
+   * @param password hashed password
+   */
   public User(String username, String password) {
     this.username = username;
-    // this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     this.password = password;
     triathlons = new ArrayList<Long>();
   }
@@ -39,8 +41,14 @@ public class User {
     this.username = username;
   }
 
+  /**
+   * addTri adds a new triathlon id.
+   * @param id unique id of the triathlon
+   */
   public void addTri(long id) {
-    if (triathlons.contains(id)) return;
+    if (triathlons.contains(id)) {
+      return;
+    }
     triathlons.add(id);
   }
 
@@ -62,6 +70,10 @@ public class User {
     return password;
   }
 
+  /**
+   * getRoles needed for user athentication.
+   * @return returns a list of roles. Only USER roles
+   */
   public List<String> getRoles() {
     ArrayList<String> list = new ArrayList<String>();
     list.add("USER");
