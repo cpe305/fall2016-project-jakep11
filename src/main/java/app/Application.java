@@ -30,7 +30,6 @@ import model.TriathlonDistance;
 import model.TriathlonElevation;
 import model.TriathlonTime;
 import model.User;
-import model.Triathlon.Temperature;
 import model.Triathlon.WeatherConditions;
 import repositories.TriathlonRepository;
 // import repositories.TriathlonRepository;
@@ -59,11 +58,6 @@ public class Application {
   public CommandLineRunner demo(UserRepository repository, TriathlonRepository triRepo) {
     return (args) -> {
       // save a couple of Users
-      Long bauerID = repository.save(new User("Bauer", "Bauer")).getId();
-      repository.save(new User("Chloe", "O'Brian"));
-      repository.save(new User("Kim", "Bauer"));
-      repository.save(new User("David", "Palmer"));
-      repository.save(new User("Michelle", "Dessler"));
       repository.save(new User("Jake", BCrypt.hashpw("Pickett", BCrypt.gensalt())));
       repository.save(new User("admin", BCrypt.hashpw("password", BCrypt.gensalt())));
 
@@ -112,25 +106,25 @@ public class Application {
       TriathlonTime triTime = new TriathlonTime(time1, time2, time3, time4, time5);
 
       WeatherConditions weather = WeatherConditions.SUNNY;
-      Temperature temp = Temperature.HOT;
+      double temp = 75;
 
-      Triathlon tri1 = new Triathlon();
+      //Triathlon tri1 = new Triathlon();
       Triathlon tri2 =
-          new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, time1, weather, temp);
+          new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, "7:00AM", weather, temp);
       Triathlon tri3 =
-          new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, time5, weather, temp);
-      Triathlon tri4 = new Triathlon();
-      Triathlon tri5 = new Triathlon();
+          new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "7:00AM", weather, temp);
+//      Triathlon tri4 = new Triathlon();
+//      Triathlon tri5 = new Triathlon(); 
       log.info("After tri init2");
 
 
-      triRepo.save(tri1);
+      //triRepo.save(tri1);
       log.info("After tri 1");
 
       triRepo.save(tri2);
       log.info("After tri 2");
-      triRepo.save(tri4);
-      triRepo.save(tri5);
+//      triRepo.save(tri4);
+//      triRepo.save(tri5);
 
       // triRepo.save(tri3);
       log.info("After tri 3");
@@ -169,7 +163,7 @@ public class Application {
 
       user.addTri(tri.getID());
       user.addTri(tri2.getID());
-      user.addTri(tri4.getID());
+      //user.addTri(tri4.getID());
       repository.save(user);
       System.out.println(user);
       for (Long l : user.getTris()) {

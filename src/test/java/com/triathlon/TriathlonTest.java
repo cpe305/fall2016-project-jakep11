@@ -5,7 +5,6 @@ import model.Triathlon;
 import model.TriathlonDistance;
 import model.TriathlonElevation;
 import model.TriathlonTime;
-import model.Triathlon.Temperature;
 import model.Triathlon.WeatherConditions;
 import org.junit.Test;
 
@@ -32,11 +31,11 @@ public class TriathlonTest {
     TriathlonTime triTime = new TriathlonTime(time1, time2, time3, time4, time5);
     
     WeatherConditions weather = WeatherConditions.SUNNY;
-    Temperature temp = Temperature.HOT;
+    double temp = 88;
     
     Triathlon tri1 = new Triathlon();
-    Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, time1, weather, temp);
-    Triathlon tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, time5, weather, temp);
+    Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, "7:00AM", weather, temp);
+    Triathlon tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "7:00AM", weather, temp);
     assertNotSame(tri1, tri2);
     
   }

@@ -18,9 +18,6 @@ public class Triathlon {
     SUNNY, WINDY, LIGHT_RAIN, HEAVY_RAIN, DRY, HUMID
   }
 
-  public enum Temperature {
-    COLD, COOL, MODERATE, WARM, HOT
-  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,10 +44,10 @@ public class Triathlon {
   private String location;
   private Date date;
   
-  @OneToOne(cascade = CascadeType.ALL)
-  private Time startTime;
+  
+  private String startTime;
   private WeatherConditions weather;
-  private Temperature temperature;
+  private double temperature;
 
   public Long getID() {
     return id;
@@ -64,11 +61,11 @@ public class Triathlon {
     this.weather = weather;
   }
 
-  public Temperature getTemperature() {
+  public double getTemperature() {
     return temperature;
   }
 
-  public void setTemperature(Temperature temperature) {
+  public void setTemperature(double temperature) {
     this.temperature = temperature;
   }
 
@@ -122,19 +119,19 @@ public class Triathlon {
     this.location = location;
   }
 
-  public Time getStartTime() {
+  public String getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(Time startTime) {
+  public void setStartTime(String startTime) {
     this.startTime = startTime;
   }
 
 
 
   public Triathlon(TriathlonDistance distance, TriathlonElevation elevation, TriathlonTime time,
-      String name, String location, Date date, Time startTime, WeatherConditions weather,
-      Temperature temperature) {
+      String name, String location, Date date, String startTime, WeatherConditions weather,
+      double temperature) {
     this.distance = distance;
     this.elevation = elevation;
     this.time = time;

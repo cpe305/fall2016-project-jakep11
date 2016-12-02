@@ -40,6 +40,7 @@ public class User {
   }
 
   public void addTri(long id) {
+    if (triathlons.contains(id)) return;
     triathlons.add(id);
   }
 

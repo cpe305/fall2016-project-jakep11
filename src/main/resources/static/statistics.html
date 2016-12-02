@@ -1,2 +1,35 @@
-<h3 ng-hide="triathlons">No triathlons entered to calculate statistics on. Please add a new Triathlon!</h3>
-<div ng-repeat="tri in triathlons">{{tri}}</div>
+<h3 ng-hide="triathlonList.length">No triathlons entered to calculate statistics on. Please add a new Triathlon!</h3>
+<div ng-repeat="tri in triathlonList">{{tri}}</div>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Swim Distance</th>
+        <th>Total Time</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="tri in triathlonList">
+      	<td>{{tri.name}}</td>
+        <td>{{tri.distance.swim}}</td>
+        <td>{{tri.time.totalTimeInSeconds | secondsToDateTime | date:'HH:mm:ss'}}</td>
+        <td><button type="button" class="btn btn-success" ng-click="showMore = !showMore">See More</button></td>
+      </tr>
+      <tr ng-repeat="tri in triathlonList" ng-show="showMore">
+      <td>Hi</td>
+      </tr>
+      
+    </tbody>
+  </table> 
+
+<div ng-show="triathlonList.length">
+	<div>Average Swim Time: {{averageSwimTime | secondsToDateTime | date:'HH:mm:ss'}} seconds</div>
+	<div>Average Bike Time: {{averageBikeTime | secondsToDateTime | date:'HH:mm:ss'}} seconds</div>
+	<div>Average Run Time: {{averageRunTime | secondsToDateTime | date:'HH:mm:ss'}} seconds</div>
+	<div>Average Swim Distance: {{averageSwimDistance}} meters</div>
+	<div>Average Bike Distance: {{averageBikeDistance}} miles</div>
+	<div>Average Run Distance: {{averageRunDistance}} miles</div>
+</div>
+
+
