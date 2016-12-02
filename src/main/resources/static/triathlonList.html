@@ -1,3 +1,60 @@
 
-<h3 ng-hide="triathlonList.length">No triathlons entered. Please add a new Triathlon!</h3>
-<div ng-repeat="tri in triathlonList">{{tri}}</div>
+<h3 ng-hide="triathlonList.length">No triathlons entered. Please
+	add a new Triathlon!</h3>
+<!-- <div ng-repeat="tri in triathlonList">{{tri}}</div> -->
+<table ng-show="triathlonList.length" class="table table-striped">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Date</th>
+			<th>Total Time</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody ng-repeat="tri in triathlonList">
+		<tr>
+			<td>{{tri.name}}</td>
+			<td>{{tri.date | date:'MM-dd-yyyy'}}</td>
+			<td>{{tri.time.totalTimeInSeconds | secondsToDateTime |
+				date:'HH:mm:ss'}}</td>
+			<td><button type="button" class="btn btn-success"
+					ng-click="showMore = !showMore">See More</button></td>
+		</tr>
+		<tr ng-show="showMore">
+			<td>
+				<div>
+					<p><b>Distance</b></p>
+					<div>Swim: {{tri.distance.swim}} meters</div>
+					<div>Bike: {{tri.distance.bike}} miles</div>
+					<div>Run: {{tri.distance.run}} miles</div>
+				</div>
+				<br>
+				<div>
+					<p><b>Time</b></p>
+					<div>Swim: {{tri.time.swimTime.timeInSeconds | secondsToDateTime | date:'HH:mm:ss'}} </div>
+					<div>T1: {{tri.time.t1Time.timeInSeconds | secondsToDateTime | date:'HH:mm:ss'}} </div>
+					<div>Bike: {{tri.time.bikeTime.timeInSeconds | secondsToDateTime | date:'HH:mm:ss'}} </div>
+					<div>T2: {{tri.time.t2Time.timeInSeconds | secondsToDateTime | date:'HH:mm:ss'}} </div>
+					<div>Run: {{tri.time.runTime.timeInSeconds | secondsToDateTime | date:'HH:mm:ss'}} </div>
+				</div>
+				<br>
+				<div>
+					<p><b>Elevation Gain</b></p>
+					<div>Bike: {{tri.elevation.bikeElevation}} feet</div>
+					<div>Run: {{tri.elevation.runElevation}} feet</div>
+				</div>
+				<br>
+				<div>
+					<p><b>Details</b></p>
+					<div>Name: {{tri.name}}</div>
+					<div>Location: {{tri.location}}</div>
+					<div>Date: {{tri.date | date:'MM-dd-yyyy'}}</div>
+					<div>Start Time: {{tri.startTime}}</div>
+					<div>Weather: {{tri.weather}}</div>
+					<div>Temperature: {{tri.temperature}} &deg;F</div>
+				</div>
+			</td>
+		</tr>
+
+	</tbody>
+</table>

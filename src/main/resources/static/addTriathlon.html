@@ -6,8 +6,8 @@
 			class="form-control" id="email" ng-model="name">
 	</div>
 	<div class="form-group">
-		<label for="distance">Distance:</label> <select class="form-control"
-			id="distance" ng-model="distanceType">
+		<label for="distance">Distance:</label> 
+		<select class="form-control" id="distance" ng-model="distanceType" ng-change="updateDistance()">
 			<option>Sprint</option>
 			<option>Olympic</option>
 			<option>Half</option>
@@ -17,17 +17,27 @@
 	</div>
 
 	<div class="form-group">
-		<label for="distanceSwim">Swim Distance:</label> <input
-			class="form-control" id="distanceSwim" ng-model="distance.swim">
-		<label for="distanceT1">T1 Distance:</label> <input
-			class="form-control" id="distanceT1" ng-model="distance.t1">
-		<label for="distanceBike">Bike Distance:</label> <input
-			class="form-control" id="distanceBike" ng-model="distance.bike">
-		<label for="distanceT2">T2 Distance:</label> <input
-			class="form-control" id="distanceT2" ng-model="distance.t2">
-		<label for="distanceRun">Run Distance:</label> <input
-			class="form-control" id="distanceRun" ng-model="distance.run">
-
+		<label for="distanceSwim">Swim Distance (meters):</label> <input
+			class="form-control" id="distanceSwim" ng-model="distance.swim" ng-disabled="distanceType != 'Custom'">
+		
+		<label for="distanceBike">Bike Distance (miles):</label> <input
+			class="form-control" id="distanceBike" ng-model="distance.bike" ng-disabled="distanceType != 'Custom'">
+		
+		<label for="distanceRun">Run Distance (miles):</label> <input
+			class="form-control" id="distanceRun" ng-model="distance.run" ng-disabled="distanceType != 'Custom'">
+	</div>
+	
+	<div class="form-group">
+		<label for="timeSwim">Swim time:</label> <input
+			class="form-control" id="timeSwim" ng-model="time.swim">
+		<label for="timeT1">T1 time:</label> <input
+			class="form-control" id="timeT1" ng-model="time.t1">
+		<label for="timeBike">Bike time:</label> <input
+			class="form-control" id="timeBike" ng-model="time.bike">
+		<label for="timeT2">T2 time:</label> <input
+			class="form-control" id="timeT2" ng-model="time.t2">
+		<label for="timeRun">Run time:</label> <input
+			class="form-control" id="timeRun" ng-model="time.run">
 	</div>
 
 	<div class="form-group">
@@ -162,7 +172,7 @@
 			class="form-control" id="temperature" ng-model="temperature">
 	</div>
 
-	<button type="submit" class="btn btn-default" ng-submit="saveTri()">Submit</button>
+	<button style="margin-bottom: 20px" type="submit" class="btn btn-success" ng-submit="saveTri()">Submit</button>
 </form>
 
 

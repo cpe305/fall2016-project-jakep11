@@ -94,6 +94,7 @@ app.controller('addTriathlon', function($scope, $http, $rootScope) {
 		bike : 12.1,
 		run : 3.1
 	};
+	$scope.distanceType = "Sprint";
 	$scope.bikeElev = 0;
 	$scope.runElev = 0;
 	$scope.location = "San Luis Obispo";
@@ -108,6 +109,39 @@ app.controller('addTriathlon', function($scope, $http, $rootScope) {
 		t2 : 23,
 		run : 20
 	};
+	
+	$scope.updateDistance = function() {
+		var t = $scope.distanceType;
+		console.log(t);
+		if (t == "Sprint") {
+			$scope.distance = {
+					swim : 750,
+					bike : 12.4,
+					run : 3.1
+				};
+		}
+		else if (t == "Olympic") {
+			$scope.distance = {
+					swim : 1500,
+					bike : 12.1,
+					run : 6.2
+				};
+		}
+		else if (t == "Half Iron") {
+			$scope.distance = {
+					swim : 1900,
+					bike : 56,
+					run : 13.1
+				};
+		}
+		else if (t == "Iron") {
+			$scope.distance = {
+					swim : 3800,
+					bike : 112,
+					run : 26.2
+				};
+		}
+	}
 
 	$scope.addTriathlon = function() {
 		var tri = new Triathlon($scope.name, $scope.distance, $scope.bikeElev,
