@@ -9,7 +9,12 @@ import model.TriathlonTime;
 import model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +25,8 @@ import repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -54,6 +61,16 @@ public class TriathlonController {
     return tris;
   }
 
+  @RequestMapping(value = "/triathlon", method = RequestMethod.DELETE)
+  public boolean deleteTriathlon(@RequestParam(value = "id") Long id, @RequestParam(value = "username") String username)
+      throws Exception {
+
+    triRepo.delete(id);
+    User user = userRepo.findByUsername(username).get(0);
+    user.deleteTri(id);
+    userRepo.save(user);
+    return true;
+  }
 
   /**
    * addTriathlon adds a new triathlon to the database for a specific user.

@@ -1,8 +1,64 @@
 <h3 ng-hide="triathlonList.length">No triathlons entered to calculate statistics on. Please add a new Triathlon!</h3>
-<div ng-repeat="tri in triathlonList">{{tri}}</div>
+<!-- <div ng-repeat="tri in triathlonList">{{tri}}</div> -->
+
+<!-- Put line graph showing progression by time -->
+
+
+<table ng-show="triathlonList.length" class="table table-striped">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Date</th>
+			<th>Total Time</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody ng-repeat="tri in triathlonList">
+		<tr>
+			<td>{{tri.name}}</td>
+			<td>{{tri.date | date:'MM-dd-yyyy'}}</td>
+			<td>{{tri.time.totalTimeInSeconds | secondsToDateTime |
+				date:'HH:mm:ss'}}</td>
+			<td><button type="button" class="btn btn-success"
+					ng-click="populateGraph(tri); showMore = !showMore;">See More</button></td>
+		</tr>
+		<tr ng-show="showMore">
+			<td colspan=4>
+				<div class="row">
+					<div class="col-sm-4">
+						<canvas id="swimBar" class="chart chart-bar"
+							chart-data="singleTriSwim_data"
+							chart-labels="singleTriSwim_labels"
+							chart-options="singleTriSwim_options"
+							chart-series="singleTriSwim_series"></canvas>
+
+					</div>
+					<div class="col-sm-4">
+						<canvas id="bikeBar" class="chart chart-bar"
+							chart-data="singleTriBike_data"
+							chart-labels="singleTriBike_labels"
+							chart-options="singleTriBike_options"
+							chart-series="singleTriBike_series"></canvas>
+
+					</div>
+					<div class="col-sm-4">
+						<canvas id="runBar" class="chart chart-bar"
+							chart-data="singleTriRun_data"
+							chart-labels="singleTriRun_labels"
+							chart-options="singleTriRun_options"
+							chart-series="singleTriRun_series"></canvas>
+
+					</div>
+				</div> 
+
+			</td>
+		</tr>
+
+	</tbody>
+</table>
 
 <br>
-<div ng-show="triathlonList.length">
+<!-- <div ng-show="triathlonList.length">
 	<div>Average Swim Time: {{averageSwimTime | secondsToDateTime | date:'HH:mm:ss'}} seconds</div>
 	<div>Average Bike Time: {{averageBikeTime | secondsToDateTime | date:'HH:mm:ss'}} seconds</div>
 	<div>Average Run Time: {{averageRunTime | secondsToDateTime | date:'HH:mm:ss'}} seconds</div>
@@ -10,5 +66,56 @@
 	<div>Average Bike Distance: {{averageBikeDistance}} miles</div>
 	<div>Average Run Distance: {{averageRunDistance}} miles</div>
 </div>
+
+
+
+ -->
+
+
+
+
+
+<h2>Swim Pace Progression</h2>
+<canvas id="line" class="chart chart-line" 
+	chart-data="allTrisSwim_data"
+	chart-series="allTrisSwim_series"
+	chart-options="allTrisSwim_options"
+	chart-labels="allTrisSwim_labels" >
+</canvas>
+
+<h2>T1 Time Progression</h2>
+<canvas id="line" class="chart chart-line" 
+	chart-data="allTrisT1_data"
+	chart-series="allTrisT1_series"
+	chart-options="allTrisT1_options"
+	chart-labels="allTrisT1_labels" >
+</canvas>
+
+<h2>Bike Pace Progression</h2>
+<canvas id="line" class="chart chart-line" 
+	chart-data="allTrisBike_data"
+	chart-series="allTrisBike_series"
+	chart-options="allTrisBike_options"
+	chart-labels="allTrisBike_labels" >
+</canvas>
+
+<h2>T2 Time Progression</h2>
+<canvas id="line" class="chart chart-line" 
+	chart-data="allTrisT2_data"
+	chart-series="allTrisT2_series"
+	chart-options="allTrisT2_options"
+	chart-labels="allTrisT2_labels" >
+</canvas>
+
+<h2>Run Pace Progression</h2>
+<canvas id="line" class="chart chart-line" 
+	chart-data="allTrisRun_data"
+	chart-series="allTrisRun_series"
+	chart-options="allTrisRun_options"
+	chart-labels="allTrisRun_labels" >
+</canvas>
+
+
+
 
 

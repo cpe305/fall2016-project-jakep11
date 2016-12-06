@@ -26,7 +26,7 @@ function myTransformRequest(obj) {
 }
 
 
-var app = angular.module('tri', [ 'ngRoute', 'ngMaterial', 'ngMessages' ]);
+var app = angular.module('tri', [ 'ngRoute', 'ngMaterial', 'ngMessages', 'chart.js' ]);
 
 app.run(function($rootScope, $http) {
     $rootScope.updateTriathlonList = function(callback) {
@@ -38,7 +38,6 @@ app.run(function($rootScope, $http) {
     		}
     	}).success(function(data) {
     		$rootScope.triathlonList = data;
-    		$rootScope.$apply();
     		if(callback) callback();
     	})
     };
@@ -83,11 +82,33 @@ app.controller('home', function($scope, $http) {
 
 app.controller('triathlonList', function($scope, $http, $rootScope) {
 	$rootScope.updateTriathlonList();
+	$scope.deleteTriathlon = function(id) {
+		console.log(id);
+	
+		$http({
+			method : 'DELETE',
+			url : 'triathlon',
+			params : {
+				"id" : id,
+				"username": $rootScope.name
+			},
+			headers : {
+				'Content-Type' : 'application/x-www-form-urlencoded'
+			},
+			transformRequest : myTransformRequest
+		}).then(function(response) {
+			console.log(response.data);
+			console.log("delete success");
+			$rootScope.updateTriathlonList();
 
+		}, function(error) {
+			console.log("failed to delete Tri");
+		});
+	}
 });
 
 
-app.controller('addTriathlon', function($scope, $http, $rootScope) {
+app.controller('addTriathlon', function($scope, $http, $rootScope, $location) {
 	$scope.name = "Wildflower";
 	$scope.distance = {
 		swim : 750,
@@ -103,12 +124,33 @@ app.controller('addTriathlon', function($scope, $http, $rootScope) {
 	$scope.weather = "SUNNY";
 	$scope.temperature = 72.0;
 	$scope.time = {
-		swim : 15,
-		t1 : 27,
-		bike : 30,
-		t2 : 23,
-		run : 20
+		swim : {
+			hours : 0,
+			minutes: 15,
+			seconds: 21
+		},
+		t1 : {
+			hours : 0,
+			minutes: 0,
+			seconds: 29
+		},
+		bike : {
+			hours : 0,
+			minutes: 33,
+			seconds: 21
+		},
+		t2 : {
+			hours : 0,
+			minutes: 0,
+			seconds: 21
+		},
+		run : {
+			hours : 0,
+			minutes: 19,
+			seconds: 45
+		},
 	};
+	console.log($scope.time);
 	
 	$scope.updateDistance = function() {
 		var t = $scope.distanceType;
@@ -123,7 +165,7 @@ app.controller('addTriathlon', function($scope, $http, $rootScope) {
 		else if (t == "Olympic") {
 			$scope.distance = {
 					swim : 1500,
-					bike : 12.1,
+					bike : 24.8,
 					run : 6.2
 				};
 		}
@@ -143,10 +185,25 @@ app.controller('addTriathlon', function($scope, $http, $rootScope) {
 		}
 	}
 
+	function convertTime(time) {
+		var newTime = {
+				swim: timeToSecs(time.swim),
+				t1: timeToSecs(time.t1),
+				bike: timeToSecs(time.bike),
+				t2: timeToSecs(time.t2),
+				run: timeToSecs(time.run)
+		}
+		return newTime;
+	}
+	
+	function timeToSecs(time) {
+		return 3600 * time.hours + 60 * time.minutes + time.seconds;
+	}
+	
 	$scope.addTriathlon = function() {
 		var tri = new Triathlon($scope.name, $scope.distance, $scope.bikeElev,
 				$scope.runElev, $scope.location, $scope.date, $scope.startTime,
-				$scope.temperature, $scope.time, $scope.weather,
+				$scope.temperature, convertTime($scope.time), $scope.weather,
 				$rootScope.name);
 		
 		$http({
@@ -161,16 +218,18 @@ app.controller('addTriathlon', function($scope, $http, $rootScope) {
 			console.log(response.data);
 			console.log("addTri success");
 			$rootScope.updateTriathlonList();
+			$location.path("/triathlonList");
 
 		}, function(error) {
 			console.log("failed to add Tri");
 		});
 	}
 
+	
 });
 
 app.controller('statistics', function($scope, $http, $rootScope) {
-	$rootScope.updateTriathlonList();
+	$rootScope.updateTriathlonList(initializeGraphs);
 	$scope.getAverageSwimTime = function() {
 		$http({
 			method : 'GET',
@@ -237,12 +296,257 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 			$scope.averageRunDistance = data;
 		})
 	}
-	$scope.getAverageSwimTime();
-	$scope.getAverageBikeTime();
-	$scope.getAverageRunTime();
-	$scope.getAverageSwimDistance();
-	$scope.getAverageBikeDistance();
-	$scope.getAverageRunDistance();
+	
+	function initData() {
+		$scope.getAverageSwimTime();
+		$scope.getAverageBikeTime();
+		$scope.getAverageRunTime();
+		$scope.getAverageSwimDistance();
+		$scope.getAverageBikeDistance();
+		$scope.getAverageRunDistance();
+	}
+	initData();
+	
+	$scope.populateGraph = function(tri) {
+		console.log("populating graph");
+		$scope.averageSwimPace = $scope.averageSwimTime / $scope.averageSwimDistance * 100;
+		$scope.averageBikePace = $scope.averageBikeDistance / $scope.averageBikeTime * 3600;
+		$scope.averageRunPace = $scope.averageRunTime / $scope.averageRunDistance / 60.0;
+		
+		
+		$scope.singleTriSwim_data = [
+		    [$scope.averageSwimPace],
+		    [tri.time.swimTime.timeInSeconds / tri.distance.swim * 100]
+		  ];
+		$scope.singleTriBike_data = [
+		    [$scope.averageBikePace],
+		    [tri.distance.bike / tri.time.bikeTime.timeInSeconds * 3600]
+		  ];
+		$scope.singleTriRun_data = [
+		    [$scope.averageRunPace],
+		    [tri.time.runTime.timeInSeconds / tri.distance.run / 60.0]
+		  ];
+	}
+	
+	
+	function initializeGraphs() {
+		
+	
+	
+	
+	
+	
+	
+	$scope.singleTriSwim_labels = ['Swim Pace'];
+	  $scope.singleTriSwim_series = ['Average Tri', 'This Tri'];
+	  
+	  $scope.singleTriBike_labels = ['Bike Pace'];
+	  $scope.singleTriBike_series = ['Average Tri', 'This Tri'];
+
+	  $scope.singleTriRun_labels = ['Run Pace'];
+	  $scope.singleTriRun_series = ['Average Tri', 'This Tri'];
+
+	  
+	  
+	  $scope.singleTriSwim_options = {
+			  scales: {
+				    yAxes: [{
+				      scaleLabel: {
+				        display: true,
+				        labelString: 'Seconds / 100 Meters'
+				      }
+				    }]
+				  }
+				}
+	  
+	  $scope.singleTriBike_options = {
+			  scales: {
+				    yAxes: [{
+				      scaleLabel: {
+				        display: true,
+				        labelString: ' Miles / Hour'
+				      }
+				    }]
+				  }
+				}
+	  
+	  $scope.singleTriRun_options = {
+			  scales: {
+				    yAxes: [{
+				      scaleLabel: {
+				        display: true,
+				        labelString: 'Minutes / Mile'
+				      }
+				    }]
+				  }
+				}
+	  
+	  
+	  
+	console.log($rootScope.triathlonList);  
+	
+	$scope.allTrisSwim_labels = [];
+	$scope.allTrisSwim_data = [];
+	var tempData = [];
+	for (var tri in $rootScope.triathlonList) {
+		console.log($rootScope.triathlonList[tri]);
+		$scope.allTrisSwim_labels.push($rootScope.triathlonList[tri].name);
+		tempData.push($rootScope.triathlonList[tri].time.swimTime.timeInSeconds / $rootScope.triathlonList[tri].distance.swim * 100);
+	}
+	$scope.allTrisSwim_data.push(tempData);
+	
+	
+	$scope.allTrisSwim_series = ['Swim'];
+
+	
+	$scope.allTrisSwim_options = {
+	  scales: {
+		    yAxes: [{
+		      scaleLabel: {
+		        display: true,
+		        labelString: 'Seconds / 100 Meters'
+		      }
+		    }],
+		    xAxes: [{
+			      scaleLabel: {
+			        display: true,
+			        labelString: 'Swim Pace Progression'
+			      }
+			    }]
+		  }
+		}
+	
+	$scope.allTrisT1_labels = [];
+	$scope.allTrisT1_data = [];
+	var tempData = [];
+	for (var tri in $rootScope.triathlonList) {
+		console.log($rootScope.triathlonList[tri]);
+		$scope.allTrisT1_labels.push($rootScope.triathlonList[tri].name);
+		tempData.push($rootScope.triathlonList[tri].time.t1Time.timeInSeconds);
+	}
+	$scope.allTrisT1_data.push(tempData);
+	
+	
+	$scope.allTrisT1_series = ['T1'];
+
+	
+	$scope.allTrisT1_options = {
+	  scales: {
+		    yAxes: [{
+		      scaleLabel: {
+		        display: true,
+		        labelString: 'Seconds'
+		      }
+		    }],
+		    xAxes: [{
+			      scaleLabel: {
+			        display: true,
+			        labelString: 'T1 Time Progression'
+			      }
+			    }]
+		  }
+		}
+	
+	
+	
+	
+	
+	$scope.allTrisBike_labels = [];
+	$scope.allTrisBike_data = [];
+	var tempData = [];
+	for (var tri in $rootScope.triathlonList) {
+		console.log($rootScope.triathlonList[tri]);
+		$scope.allTrisBike_labels.push($rootScope.triathlonList[tri].name);
+		tempData.push($rootScope.triathlonList[tri].distance.bike / $rootScope.triathlonList[tri].time.bikeTime.timeInSeconds * 3600);
+	}
+	$scope.allTrisBike_data.push(tempData);
+	
+	
+	$scope.allTrisBike_series = ['Bike'];
+
+	
+	$scope.allTrisBike_options = {
+	  scales: {
+		    yAxes: [{
+		      scaleLabel: {
+		        display: true,
+		        labelString: 'Miles / Hour'
+		      }
+		    }],
+		    xAxes: [{
+			      scaleLabel: {
+			        display: true,
+			        labelString: 'Bike Pace Progression'
+			      }
+			    }]
+		  }
+		}
+	
+	$scope.allTrisT2_labels = [];
+	$scope.allTrisT2_data = [];
+	var tempData = [];
+	for (var tri in $rootScope.triathlonList) {
+		console.log($rootScope.triathlonList[tri]);
+		$scope.allTrisT2_labels.push($rootScope.triathlonList[tri].name);
+		tempData.push($rootScope.triathlonList[tri].time.t2Time.timeInSeconds);
+	}
+	$scope.allTrisT2_data.push(tempData);
+	
+	
+	$scope.allTrisT2_series = ['T2'];
+
+	
+	$scope.allTrisT2_options = {
+	  scales: {
+		    yAxes: [{
+		      scaleLabel: {
+		        display: true,
+		        labelString: 'Seconds'
+		      }
+		    }],
+		    xAxes: [{
+			      scaleLabel: {
+			        display: true,
+			        labelString: 'T2 Time Progression'
+			      }
+			    }]
+		  }
+		}
+	
+	$scope.allTrisRun_labels = [];
+	$scope.allTrisRun_data = [];
+	var tempData = [];
+	for (var tri in $rootScope.triathlonList) {
+		console.log($rootScope.triathlonList[tri]);
+		$scope.allTrisRun_labels.push($rootScope.triathlonList[tri].name);
+		tempData.push($rootScope.triathlonList[tri].time.runTime.timeInSeconds / 60.0 / $rootScope.triathlonList[tri].distance.run);
+	}
+	$scope.allTrisRun_data.push(tempData);
+	
+	
+	$scope.allTrisRun_series = ['Run'];
+
+	
+	$scope.allTrisRun_options = {
+	  scales: {
+		    yAxes: [{
+		      scaleLabel: {
+		        display: true,
+		        labelString: 'Minutes / Mile'
+		      }
+		    }],
+		    xAxes: [{
+			      scaleLabel: {
+			        display: true,
+			        labelString: 'Run Pace Progression'
+			      }
+			    }]
+		  }
+		}
+	
+	
+	}
+	
 });
 
 app.controller('createAccount', function($scope, $http, $rootScope, $location) {

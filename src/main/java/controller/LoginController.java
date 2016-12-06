@@ -54,7 +54,7 @@ public class LoginController {
     SecurityContextHolder.getContext().setAuthentication(auth);
     return registered;
   }
-
+ 
 
 
   @RequestMapping("/user")

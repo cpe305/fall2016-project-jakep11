@@ -26,18 +26,103 @@
 		<label for="distanceRun">Run Distance (miles):</label> <input
 			class="form-control" id="distanceRun" ng-model="distance.run" ng-disabled="distanceType != 'Custom'">
 	</div>
-	
+
 	<div class="form-group">
-		<label for="timeSwim">Swim time:</label> <input
-			class="form-control" id="timeSwim" ng-model="time.swim">
-		<label for="timeT1">T1 time:</label> <input
-			class="form-control" id="timeT1" ng-model="time.t1">
-		<label for="timeBike">Bike time:</label> <input
-			class="form-control" id="timeBike" ng-model="time.bike">
-		<label for="timeT2">T2 time:</label> <input
-			class="form-control" id="timeT2" ng-model="time.t2">
-		<label for="timeRun">Run time:</label> <input
-			class="form-control" id="timeRun" ng-model="time.run">
+		<label for="swimRow">Swim time:</label>
+		<div class="row" id="swimRow">
+		
+			<div class="col-xs-4">
+			<label for="swimHours">Hours:</label>
+				<input class="form-control" id="swimHours" ng-model="time.swim.hours">
+			</div>
+			<div class="col-xs-4">
+			<label for="swimMinutes">Minutes:</label>
+				<input class="form-control" id="swimMinutes"
+					ng-model="time.swim.minutes">
+			</div>
+			<div class="col-xs-4">
+			<label for="swimSeconds">Seconds:</label>
+				<input class="form-control" id="swimSeconds"
+					ng-model="time.swim.seconds">
+			</div>
+		</div>
+		<br>
+		<label for="t1Row">T1 time:</label>
+		<div class="row" id="t1Row">
+		
+			<div class="col-xs-4">
+			<label for="t1Hours">Hours:</label>
+				<input class="form-control" id="t1Hours" ng-model="time.t1.hours">
+			</div>
+			<div class="col-xs-4">
+			<label for="t1Minutes">Minutes:</label>
+				<input class="form-control" id="t1Minutes"
+					ng-model="time.t1.minutes">
+			</div>
+			<div class="col-xs-4">
+			<label for="t1Seconds">Seconds:</label>
+				<input class="form-control" id="t1Seconds"
+					ng-model="time.t1.seconds">
+			</div>
+		</div>
+		<br>
+		<label for="bikeRow">Bike time:</label>
+		<div class="row" id="bikeRow">
+		
+			<div class="col-xs-4">
+			<label for="bikeHours">Hours:</label>
+				<input class="form-control" id="bikeHours" ng-model="time.bike.hours">
+			</div>
+			<div class="col-xs-4">
+			<label for="bikeMinutes">Minutes:</label>
+				<input class="form-control" id="bikeMinutes"
+					ng-model="time.bike.minutes">
+			</div>
+			<div class="col-xs-4">
+			<label for="bikeSeconds">Seconds:</label>
+				<input class="form-control" id="bikeSeconds"
+					ng-model="time.bike.seconds">
+			</div>
+		</div>
+		<br>
+		<label for="t2Row">T2 time:</label>
+		<div class="row" id="t2Row">
+		
+			<div class="col-xs-4">
+			<label for="t2Hours">Hours:</label>
+				<input class="form-control" id="t2Hours" ng-model="time.t2.hours">
+			</div>
+			<div class="col-xs-4">
+			<label for="t2Minutes">Minutes:</label>
+				<input class="form-control" id="t2Minutes"
+					ng-model="time.t2.minutes">
+			</div>
+			<div class="col-xs-4">
+			<label for="t2Seconds">Seconds:</label>
+				<input class="form-control" id="t2Seconds"
+					ng-model="time.t2.seconds">
+			</div>
+		</div>
+		<br>
+		<label for="runRow">Run time:</label>
+		<div class="row" id="runRow">
+		
+			<div class="col-xs-4">
+			<label for="runHours">Hours:</label>
+				<input class="form-control" id="runHours" ng-model="time.run.hours">
+			</div>
+			<div class="col-xs-4">
+			<label for="runMinutes">Minutes:</label>
+				<input class="form-control" id="runMinutes"
+					ng-model="time.run.minutes">
+			</div>
+			<div class="col-xs-4">
+			<label for="runSeconds">Seconds:</label>
+				<input class="form-control" id="runSeconds"
+					ng-model="time.run.seconds">
+			</div>
+		</div>
+
 	</div>
 
 	<div class="form-group">

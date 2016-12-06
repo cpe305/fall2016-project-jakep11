@@ -165,7 +165,7 @@ public class Application {
     protected void configure(HttpSecurity http) throws Exception {
       http.httpBasic().and().logout().and().authorizeRequests()
           .antMatchers("/loginPage.html", "/createUser", "/login", "/index.html", "/home.html",
-              "/signup.html", "/login.html", "/createAccount.html", "/")
+              "/signup.html", "/login.html", "/createAccount.html", "/", "/modules/**")
           .permitAll().anyRequest().authenticated().and()
           .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
           .csrfTokenRepository(csrfTokenRepository());

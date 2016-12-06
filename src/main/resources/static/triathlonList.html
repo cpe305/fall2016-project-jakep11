@@ -21,7 +21,7 @@
 					ng-click="showMore = !showMore">See More</button></td>
 		</tr>
 		<tr ng-show="showMore">
-			<td>
+			<td colspan=4>
 				<div>
 					<p><b>Distance</b></p>
 					<div>Swim: {{tri.distance.swim}} meters</div>
@@ -53,6 +53,8 @@
 					<div>Weather: {{tri.weather}}</div>
 					<div>Temperature: {{tri.temperature}} &deg;F</div>
 				</div>
+				<br>
+				<button class="btn btn-danger" ng-click="deleteTriathlon(tri.id)">Delete Triathlon</button>
 			</td>
 		</tr>
 

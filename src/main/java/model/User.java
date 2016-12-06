@@ -51,6 +51,10 @@ public class User {
     }
     triathlons.add(id);
   }
+  
+  public void deleteTri(long id) {
+    triathlons.remove(id);
+  }
 
   public ArrayList<Long> getTris() {
     return triathlons;
