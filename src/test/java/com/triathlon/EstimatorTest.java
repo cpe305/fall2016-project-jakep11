@@ -1,0 +1,67 @@
+package com.triathlon;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
+import model.Estimator;
+import model.Stats;
+import model.Time;
+import model.Triathlon;
+import model.TriathlonDistance;
+import model.TriathlonElevation;
+import model.TriathlonTime;
+import model.User;
+import model.Triathlon.WeatherConditions;
+import repositories.TriathlonRepository;
+import repositories.UserRepository;
+
+public class EstimatorTest {
+
+  Triathlon tri1, tri2, tri3;
+  ArrayList<Triathlon> triList;
+  double epsilon = 0.0001;
+
+  @Before
+  public void setup() {
+
+    TriathlonDistance triDist = new TriathlonDistance(500, 12, 3);
+    TriathlonElevation triElev = new TriathlonElevation(500, 100);
+
+
+    Date date = new Date(System.currentTimeMillis());
+
+    Time time1 = new Time(0, 8, 30);
+    Time time2 = new Time(30);
+    Time time3 = new Time(0, 30, 15);
+    Time time4 = new Time(10);
+    Time time5 = new Time(0, 20, 5);
+    TriathlonTime triTime = new TriathlonTime(time1, time2, time3, time4, time5);
+
+    WeatherConditions weather = WeatherConditions.SUNNY;
+    double temp = 68;
+
+    //tri1 = new Triathlon();
+    tri2 =
+        new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, "7:00AM", weather, temp);
+    tri3 =
+        new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "7:00AM", weather, temp);
+
+    triList = new ArrayList<Triathlon>();
+    triList.add(tri2);
+    triList.add(tri3);
+  }
+
+  @Test
+  public void estimatorTest1() {
+    Estimator.estimateNewTriathlon(triList, tri2);
+  }
+
+
+}

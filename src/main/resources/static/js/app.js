@@ -24,7 +24,20 @@ function myTransformRequest(obj) {
 		str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 	return str.join("&");
 }
+function convertTime(time) {
+	var newTime = {
+			swim: timeToSecs(time.swim),
+			t1: timeToSecs(time.t1),
+			bike: timeToSecs(time.bike),
+			t2: timeToSecs(time.t2),
+			run: timeToSecs(time.run)
+	}
+	return newTime;
+}
 
+function timeToSecs(time) {
+	return 3600 * parseFloat(time.hours) + 60 * parseFloat(time.minutes) + parseFloat(time.seconds);
+}
 
 var app = angular.module('tri', [ 'ngRoute', 'ngMaterial', 'ngMessages', 'chart.js' ]);
 
@@ -86,8 +99,6 @@ app.controller('home', function($scope, $http) {
 app.controller('triathlonList', function($scope, $http, $rootScope) {
 	$rootScope.updateTriathlonList();
 	$scope.deleteTriathlon = function(id) {
-		console.log(id);
-	
 		$http({
 			method : 'DELETE',
 			url : 'triathlon',
@@ -100,7 +111,6 @@ app.controller('triathlonList', function($scope, $http, $rootScope) {
 			},
 			transformRequest : myTransformRequest
 		}).then(function(response) {
-			console.log(response.data);
 			console.log("delete success");
 			$rootScope.updateTriathlonList();
 
@@ -111,7 +121,6 @@ app.controller('triathlonList', function($scope, $http, $rootScope) {
 });
 
 app.controller('estimator', function($scope, $http, $rootScope) {
-	// $scope.name = "Wildflower";
 	$scope.distance = {
 		swim : 750,
 		bike : 12.4,
@@ -120,7 +129,6 @@ app.controller('estimator', function($scope, $http, $rootScope) {
 	$scope.distanceType = "Sprint";
 	$scope.bikeElev = 0;
 	$scope.runElev = 0;
-	// $scope.location = "San Luis Obispo";
 	$scope.date = new Date();
 	$scope.startTime = "7:00 AM";
 	$scope.weather = "SUNNY";
@@ -152,7 +160,6 @@ app.controller('estimator', function($scope, $http, $rootScope) {
 			seconds: 45
 		},
 	};
-	console.log($scope.time);
 	
 	$scope.updateDistance = function() {
 		var t = $scope.distanceType;
@@ -187,58 +194,31 @@ app.controller('estimator', function($scope, $http, $rootScope) {
 		}
 	}
 
-	function convertTime(time) {
-		var newTime = {
-				swim: timeToSecs(time.swim),
-				t1: timeToSecs(time.t1),
-				bike: timeToSecs(time.bike),
-				t2: timeToSecs(time.t2),
-				run: timeToSecs(time.run)
-		}
-		console.log(newTime);
-		return newTime;
-	}
 	
-	function timeToSecs(time) {
-		console.log(time);
-		return 3600 * parseFloat(time.hours) + 60 * parseFloat(time.minutes) + parseFloat(time.seconds);
-	}
-	
-	$scope.singleTriSwim_labels = ['Triathlon Time By Sport'];
-	  $scope.singleTriSwim_series = ['Swim', 'Bike', 'Run'];
-	  
-	  $scope.singleTriBike_labels = ['Bike Pace'];
-	  $scope.singleTriBike_series = ['Average Tri'];
-
-	  $scope.singleTriRun_labels = ['Run Pace'];
-	  $scope.singleTriRun_series = ['Average Tri'];
-
-	  
+	$scope.estimatedTri_labels = ['Triathlon Time By Sport'];
+	  $scope.estimatedTri_series = ['Swim', 'Bike', 'Run'];
 	  
 	  $scope.singleTriSwim_options = {
-			  scales: {
-				    yAxes: [{
-				    	
-				    	ticks: {
-			                beginAtZero: true
-			            },
-				      scaleLabel: {
-				        display: true,
-				        labelString: 'Seconds'
-				      }
-				    }]
-				  }
-				}
-	  
+		  scales: {
+			    yAxes: [{
+			    	
+			    	ticks: {
+		                beginAtZero: true
+		            },
+			      scaleLabel: {
+			        display: true,
+			        labelString: 'Seconds'
+			      }
+			    }]
+			  }
+			}
 	  
 	
 	$scope.estimateTriathlon = function() {
-		console.log("Trying to estimate tri")
 		var tri = new Triathlon("estimation", $scope.distance, $scope.bikeElev,
 				$scope.runElev, "location", "date", $scope.startTime,
 				$scope.temperature, $scope.time, $scope.weather,
 				$rootScope.name);
-		console.log("Added triathlon");
 		$http({
 			method : 'POST',
 			url : 'estimate',
@@ -248,7 +228,6 @@ app.controller('estimator', function($scope, $http, $rootScope) {
 			transformRequest : myTransformRequest,
 			data : tri
 		}).then(function(response) {
-			console.log(response.data);
 			$scope.estimatedSwimTime = response.data.swimTime.timeInSeconds;
 			$scope.estimatedT1Time = response.data.t1Time.timeInSeconds;
 			$scope.estimatedBikeTime = response.data.bikeTime.timeInSeconds;
@@ -256,33 +235,18 @@ app.controller('estimator', function($scope, $http, $rootScope) {
 			$scope.estimatedRunTime = response.data.runTime.timeInSeconds;
 			$scope.estimatedTotalTime = response.data.totalTimeInSeconds;
 
-			
-			
-			$scope.singleTriSwim_data = [
+			$scope.estimatedTri_data = [
 			    [$scope.estimatedSwimTime],
 			    [$scope.estimatedBikeTime],
 			    [$scope.estimatedRunTime]
 			    
 			  ];
-			$scope.singleTriBike_data = [
-			    [$scope.estimatedBikeTime]
-			    
-			  ];
-			$scope.singleTriRun_data = [
-			    [$scope.estimatedRunTime]
-			    
-			  ];
-			
-			console.log($scope.estimatedSwimTime);
-			console.log("estimate success");
+			console.log("estimated Tri success");
 
 		}, function(error) {
 			console.log("failed to estimate Tri");
 		});
-	}
-
-	
-	
+	}	
 });
 
 app.controller('addTriathlon', function($scope, $http, $rootScope, $location) {
@@ -327,11 +291,9 @@ app.controller('addTriathlon', function($scope, $http, $rootScope, $location) {
 			seconds: 45
 		},
 	};
-	console.log($scope.time);
 	
 	$scope.updateDistance = function() {
 		var t = $scope.distanceType;
-		console.log(t);
 		if (t == "Sprint") {
 			$scope.distance = {
 					swim : 750,
@@ -361,30 +323,12 @@ app.controller('addTriathlon', function($scope, $http, $rootScope, $location) {
 				};
 		}
 	}
-
-	function convertTime(time) {
-		var newTime = {
-				swim: timeToSecs(time.swim),
-				t1: timeToSecs(time.t1),
-				bike: timeToSecs(time.bike),
-				t2: timeToSecs(time.t2),
-				run: timeToSecs(time.run)
-		}
-		console.log(newTime);
-		return newTime;
-	}
-	
-	function timeToSecs(time) {
-		console.log(time);
-		return 3600 * parseFloat(time.hours) + 60 * parseFloat(time.minutes) + parseFloat(time.seconds);
-	}
 	
 	$scope.addTriathlon = function() {
 		var tri = new Triathlon($scope.name, $scope.distance, $scope.bikeElev,
 				$scope.runElev, $scope.location, $scope.date, $scope.startTime,
 				$scope.temperature, convertTime($scope.time), $scope.weather,
 				$rootScope.name);
-		console.log("Added triathlon");
 		$http({
 			method : 'POST',
 			url : 'addTri',
@@ -394,7 +338,6 @@ app.controller('addTriathlon', function($scope, $http, $rootScope, $location) {
 			transformRequest : myTransformRequest,
 			data : tri
 		}).then(function(response) {
-			console.log(response.data);
 			console.log("addTri success");
 			$rootScope.updateTriathlonList();
 			$location.path("/triathlonList");
@@ -476,15 +419,14 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 		})
 	}
 	
-	function initData() {
-		$scope.getAverageSwimTime();
-		$scope.getAverageBikeTime();
-		$scope.getAverageRunTime();
-		$scope.getAverageSwimDistance();
-		$scope.getAverageBikeDistance();
-		$scope.getAverageRunDistance();
-	}
-	initData();
+	
+	$scope.getAverageSwimTime();
+	$scope.getAverageBikeTime();
+	$scope.getAverageRunTime();
+	$scope.getAverageSwimDistance();
+	$scope.getAverageBikeDistance();
+	$scope.getAverageRunDistance();
+
 	
 	$scope.populateGraph = function(tri) {
 		console.log("populating graph");
@@ -510,18 +452,18 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 	
 	function initializeGraphs() {
 	
-	$scope.singleTriSwim_labels = ['Swim Pace'];
-	  $scope.singleTriSwim_series = ['Average Tri', 'This Tri'];
-	  
-	  $scope.singleTriBike_labels = ['Bike Pace'];
-	  $scope.singleTriBike_series = ['Average Tri', 'This Tri'];
+		$scope.singleTriSwim_labels = ['Swim Pace'];
+		$scope.singleTriSwim_series = ['Average Tri', 'This Tri'];
+		  
+		$scope.singleTriBike_labels = ['Bike Pace'];
+		$scope.singleTriBike_series = ['Average Tri', 'This Tri'];
+	
+		$scope.singleTriRun_labels = ['Run Pace'];
+		$scope.singleTriRun_series = ['Average Tri', 'This Tri'];
 
-	  $scope.singleTriRun_labels = ['Run Pace'];
-	  $scope.singleTriRun_series = ['Average Tri', 'This Tri'];
-
 	  
 	  
-	  $scope.singleTriSwim_options = {
+	    $scope.singleTriSwim_options = {
 			  scales: {
 				    yAxes: [{
 				      scaleLabel: {
@@ -532,7 +474,7 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 				  }
 				}
 	  
-	  $scope.singleTriBike_options = {
+	    $scope.singleTriBike_options = {
 			  scales: {
 				    yAxes: [{
 				      scaleLabel: {
@@ -543,7 +485,7 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 				  }
 				}
 	  
-	  $scope.singleTriRun_options = {
+	    $scope.singleTriRun_options = {
 			  scales: {
 				    yAxes: [{
 				      scaleLabel: {
@@ -556,18 +498,15 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 	  
 	  
 	  
-	console.log($rootScope.triathlonList);  
 	
 	$scope.allTrisSwim_labels = [];
 	$scope.allTrisSwim_data = [];
 	var tempData = [];
 	for (var tri in $rootScope.triathlonList) {
-		console.log($rootScope.triathlonList[tri]);
 		$scope.allTrisSwim_labels.push($rootScope.triathlonList[tri].name);
 		tempData.push($rootScope.triathlonList[tri].time.swimTime.timeInSeconds / $rootScope.triathlonList[tri].distance.swim * 100);
 	}
 	$scope.allTrisSwim_data.push(tempData);
-	
 	
 	$scope.allTrisSwim_series = ['Swim'];
 
@@ -589,20 +528,19 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 		  }
 		}
 	
+	
+	
 	$scope.allTrisT1_labels = [];
 	$scope.allTrisT1_data = [];
 	var tempData = [];
 	for (var tri in $rootScope.triathlonList) {
-		console.log($rootScope.triathlonList[tri]);
 		$scope.allTrisT1_labels.push($rootScope.triathlonList[tri].name);
 		tempData.push($rootScope.triathlonList[tri].time.t1Time.timeInSeconds);
 	}
 	$scope.allTrisT1_data.push(tempData);
 	
-	
 	$scope.allTrisT1_series = ['T1'];
 
-	
 	$scope.allTrisT1_options = {
 	  scales: {
 		    yAxes: [{
@@ -621,23 +559,17 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 		}
 	
 	
-	
-	
-	
 	$scope.allTrisBike_labels = [];
 	$scope.allTrisBike_data = [];
 	var tempData = [];
 	for (var tri in $rootScope.triathlonList) {
-		console.log($rootScope.triathlonList[tri]);
 		$scope.allTrisBike_labels.push($rootScope.triathlonList[tri].name);
 		tempData.push($rootScope.triathlonList[tri].distance.bike / $rootScope.triathlonList[tri].time.bikeTime.timeInSeconds * 3600);
 	}
 	$scope.allTrisBike_data.push(tempData);
 	
-	
 	$scope.allTrisBike_series = ['Bike'];
 
-	
 	$scope.allTrisBike_options = {
 	  scales: {
 		    yAxes: [{
@@ -659,16 +591,13 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 	$scope.allTrisT2_data = [];
 	var tempData = [];
 	for (var tri in $rootScope.triathlonList) {
-		console.log($rootScope.triathlonList[tri]);
 		$scope.allTrisT2_labels.push($rootScope.triathlonList[tri].name);
 		tempData.push($rootScope.triathlonList[tri].time.t2Time.timeInSeconds);
 	}
 	$scope.allTrisT2_data.push(tempData);
 	
-	
 	$scope.allTrisT2_series = ['T2'];
 
-	
 	$scope.allTrisT2_options = {
 	  scales: {
 		    yAxes: [{
@@ -686,20 +615,18 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 		  }
 		}
 	
+	
 	$scope.allTrisRun_labels = [];
 	$scope.allTrisRun_data = [];
 	var tempData = [];
 	for (var tri in $rootScope.triathlonList) {
-		console.log($rootScope.triathlonList[tri]);
 		$scope.allTrisRun_labels.push($rootScope.triathlonList[tri].name);
 		tempData.push($rootScope.triathlonList[tri].time.runTime.timeInSeconds / 60.0 / $rootScope.triathlonList[tri].distance.run);
 	}
 	$scope.allTrisRun_data.push(tempData);
 	
-	
 	$scope.allTrisRun_series = ['Run'];
 
-	
 	$scope.allTrisRun_options = {
 	  scales: {
 		    yAxes: [{
@@ -716,14 +643,11 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 			    }]
 		  }
 		}
-	
-	
 	}
 	
 });
 
 app.controller('createAccount', function($scope, $http, $rootScope, $location) {
-	console.log("create account");
 	$scope.error = false;
 	$scope.credentials = {};
 

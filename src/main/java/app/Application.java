@@ -53,7 +53,7 @@ public class Application {
    * @param args not used
    */
   public static void main(String[] args) {
-    SpringApplication.run(Application.class, args); //NOSONAR
+    SpringApplication.run(Application.class, args); // NOSONAR
   }
 
   /**
@@ -66,43 +66,23 @@ public class Application {
   @Bean
   public CommandLineRunner demo(UserRepository repository, TriathlonRepository triRepo) {
     return (args) -> {
-      // save a couple of Users
+      // save a couple of Users in database
       repository.save(new User("Jake", BCrypt.hashpw("Pickett", BCrypt.gensalt())));
       repository.save(new User("admin", BCrypt.hashpw("password", BCrypt.gensalt())));
 
-      // fetch all Users
-      log.info("Users found with findAll():");
-      log.info("-------------------------------");
-      for (User user : repository.findAll()) {
-        log.info(user.toString());
-      }
-      log.info("");
-
       // fetch an individual User by ID
       User user = repository.findOne(1L);
-      log.info("User found with findOne(1L):");
-      log.info("--------------------------------");
-      log.info(user.toString());
-      log.info("");
 
       // fetch Users by last name
-      log.info("User found with findByUsername('Jake'):");
-      log.info("--------------------------------------------");
       for (User jake : repository.findByUsername("Jake")) {
-        log.info(jake.toString());
         user = jake;
       }
-      log.info("");
 
       // Test adding Tris to a user and removing them
 
 
-
-      log.info("before tri init");
       TriathlonDistance triDist = new TriathlonDistance(500, 12, 3);
       TriathlonElevation triElev = new TriathlonElevation(500, 100);
-      // triRepo.save(triElev);
-      log.info("After tri init");
 
 
       Date date = new Date(System.currentTimeMillis());
@@ -117,42 +97,17 @@ public class Application {
       WeatherConditions weather = WeatherConditions.SUNNY;
       double temp = 75;
 
-      Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, "7:00AM",
-          weather, temp);
-      // Triathlon tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date,
-      // "7:00AM",
-      // weather, temp);
+      Triathlon tri2 = new Triathlon(triDist, triElev, triTime, "TestTri", "San Luis Obispo", date,
+          "7:00AM", weather, temp);
 
       triRepo.save(tri2);
 
-      // fetch all Users
-      log.info("Tris found with findAll():");
-      log.info("-------------------------------");
-      for (Triathlon tri : triRepo.findAll()) {
-        log.info(tri.toString());
-      }
-      log.info("");
-
       // fetch an individual User by ID
       Triathlon tri = triRepo.findOne(1L);
-      log.info("Tri found with findOne(1L):");
-      log.info("--------------------------------");
-      log.info(tri.toString());
-      log.info("");
-
-
-      log.info("After tri init4");
-
-
 
       user.addTri(tri.getId());
       user.addTri(tri2.getId());
       repository.save(user);
-      System.out.println(user);
-      for (Long l : user.getTris()) {
-        log.info(l.toString());
-      }
-
     };
   }
 
@@ -181,11 +136,6 @@ public class Application {
       auth.userDetailsService(userDetailsService);
       auth.authenticationProvider(authProvider);
     }
-
-    /*
-     * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-     * auth.inMemoryAuthentication().withUser("admin").password("password").roles("USER"); }
-     */
 
     private CsrfTokenRepository csrfTokenRepository() {
       HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();

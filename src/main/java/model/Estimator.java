@@ -1,10 +1,12 @@
 package model;
 
+import model.Triathlon.WeatherConditions;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import model.Triathlon.WeatherConditions;
+
 
 
 public class Estimator {
@@ -26,16 +28,11 @@ public class Estimator {
         avgTriPace.getDistance().getSwim() / avgTriPace.getTime().getSwimTime().getTimeInSeconds();
     double bikePace =
         avgTriPace.getDistance().getBike() / avgTriPace.getTime().getBikeTime().getTimeInSeconds();
-    System.out.println(bikePace);
     double runPace =
         avgTriPace.getDistance().getRun() / avgTriPace.getTime().getRunTime().getTimeInSeconds();
 
 
-
-    // System.out.println(newTri.getTime().getBikeTime().getTimeInSeconds());
     newTri = scaleForElevation(newTri.getElevation(), newTri);
-
-
 
     double newSwimTime = newTri.getDistance().getSwim() / swimPace;
     double newBikeTime = newTri.getDistance().getBike() / bikePace;
@@ -53,7 +50,6 @@ public class Estimator {
   }
 
   public static Triathlon scaleForStartTime(String startTime, Triathlon tri) {
-    System.out.println(startTime);
     String earlyDateString = "6:59 AM";
     String lateDateString = "10:01 AM";
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm aa");
@@ -69,9 +65,8 @@ public class Estimator {
       } else if (date.compareTo(date2) > 0) {
         scalar = 1.03;
       }
-      System.out.println("parsed date");
     } catch (Exception exception) {
-      System.out.println("error parsing date");
+      
     }
 
 
