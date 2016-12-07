@@ -98,7 +98,6 @@ public class Stats {
     }
 
     bikeT.setTime(bikeT.getTimeInSeconds() / (int) count);
-    //System.out.println(bikeT.getTimeInSeconds());
     return bikeT;
   }
 

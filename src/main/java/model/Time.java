@@ -99,6 +99,6 @@ public class Time {
   
   @Override 
   public String toString() {
-    return "" + getTimeInSeconds();
+    return Integer.toString(getTimeInSeconds());
   }
 }

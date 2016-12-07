@@ -28,27 +28,19 @@ public class MyUserDetailsService implements UserDetailsService {
    * 
    */
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    System.out.println("Trying to log in a user from MyUserDetailsService Class");
 
     List<User> users = userRepository.findByUsername(username);
-    System.out.println("AFter Trying to log in a user from MyUserDetailsService Class");
 
-    if (users.size() == 0) {
-      System.out.println("No user found with username: " + username);
+    if (users.isEmpty()) {
       throw new UsernameNotFoundException("No user found with username: " + username);
     }
 
-    System.out.println("found one");
     User user = users.get(0);
-    System.out.println("Password already saved:" + user.getPassword());
-    System.out.println(user.getUsername());
-    System.out.println(user.toString());
 
     boolean enabled = true;
     boolean accountNonExpired = true;
     boolean credentialsNonExpired = true;
     boolean accountNonLocked = true;
-    System.out.println("Right before 'return'");
 
     return new org.springframework.security.core.userdetails.User(user.getUsername(),
         user.getPassword().toLowerCase(), enabled, accountNonExpired, credentialsNonExpired,
@@ -59,7 +51,6 @@ public class MyUserDetailsService implements UserDetailsService {
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
     for (String role : roles) {
       authorities.add(new SimpleGrantedAuthority(role));
-      System.out.println("found role");
     }
     return authorities;
   }

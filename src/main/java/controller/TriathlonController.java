@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import repositories.TriathlonRepository;
 import repositories.UserRepository;
 
@@ -40,6 +39,7 @@ public class TriathlonController {
 
   /**
    * getTriathlonsForUser gets all triathlons for the logged in user.
+   * 
    * @param username unique username
    * @return returns all triathlons
    */
@@ -56,8 +56,8 @@ public class TriathlonController {
   }
 
   @RequestMapping(value = "/triathlon", method = RequestMethod.DELETE)
-  public boolean deleteTriathlon(@RequestParam(value = "id") Long id, @RequestParam(value = "username") String username)
-      throws Exception {
+  public boolean deleteTriathlon(@RequestParam(value = "id") Long id,
+      @RequestParam(value = "username") String username) {
 
     triRepo.delete(id);
     User user = userRepo.findByUsername(username).get(0);
@@ -68,6 +68,7 @@ public class TriathlonController {
 
   /**
    * addTriathlon adds a new triathlon to the database for a specific user.
+   * 
    * @param name name
    * @param swimDist swimDist
    * @param bikeDist bikeDist
@@ -92,10 +93,8 @@ public class TriathlonController {
       @RequestParam(value = "swimDist") double swimDist,
       @RequestParam(value = "bikeDist") double bikeDist,
       @RequestParam(value = "runDist") double runDist,
-      @RequestParam(value = "swimTime") int swimTime, 
-      @RequestParam(value = "t1Time") int t1Time,
-      @RequestParam(value = "bikeTime") int bikeTime, 
-      @RequestParam(value = "t2Time") int t2Time,
+      @RequestParam(value = "swimTime") int swimTime, @RequestParam(value = "t1Time") int t1Time,
+      @RequestParam(value = "bikeTime") int bikeTime, @RequestParam(value = "t2Time") int t2Time,
       @RequestParam(value = "runTime") int runTime,
       @RequestParam(value = "bikeElev") double bikeElev,
       @RequestParam(value = "runElev") double runElev,
@@ -105,20 +104,16 @@ public class TriathlonController {
       @RequestParam(value = "temperature") double temperature,
       @RequestParam(value = "username") String username) {
 
-    System.out.println("Trying to add new Tri");
     TriathlonDistance triDist = new TriathlonDistance(swimDist, bikeDist, runDist);
     TriathlonTime triTime = new TriathlonTime(new Time(swimTime), new Time(t1Time),
         new Time(bikeTime), new Time(t2Time), new Time(runTime));
     TriathlonElevation triElev = new TriathlonElevation(bikeElev, runElev);
     Triathlon newTri = new Triathlon(triDist, triElev, triTime, name, location, new Date(),
         startTime, WeatherConditions.valueOf(weather), temperature);
-    System.out.println(username);
-    System.out.println(bikeElev);
-    System.out.println(newTri.getId());
+    
 
     newTri = triRepo.save(newTri);
     User user = userRepo.findByUsername(username).get(0);
-    System.out.println(newTri.getId());
     user.addTri(newTri.getId());
     userRepo.save(user);
     return newTri;

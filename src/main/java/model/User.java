@@ -24,6 +24,7 @@ public class User {
 
   /**
    * User constructor.
+   * 
    * @param username unique username
    * @param password hashed password
    */
@@ -43,6 +44,7 @@ public class User {
 
   /**
    * addTri adds a new triathlon id.
+   * 
    * @param id unique id of the triathlon
    */
   public void addTri(long id) {
@@ -51,7 +53,7 @@ public class User {
     }
     triathlons.add(id);
   }
-  
+
   public void deleteTri(long id) {
     triathlons.remove(id);
   }
@@ -66,8 +68,8 @@ public class User {
 
   @Override
   public String toString() {
-    return String.format("User[id=%d, userName='%s', password='%s', numTris='%s']", id, username,
-        password, triathlons.size());
+    return String.format("User[id=%d, userName='%s', numTris='%s']", id, username,
+        triathlons.size());
   }
 
   public String getPassword() {
@@ -76,6 +78,7 @@ public class User {
 
   /**
    * getRoles needed for user athentication.
+   * 
    * @return returns a list of roles. Only USER roles
    */
   public List<String> getRoles() {

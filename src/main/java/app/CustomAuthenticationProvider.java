@@ -26,17 +26,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     String username = authentication.getName();
     String password = authentication.getCredentials().toString();
 
-    System.out.println("Authenticating user");
-    System.out.println(username);
-    System.out.println(password);
-
     List<User> users = userRepo.findByUsername(username);
-    if (users.size() < 1) {
+    if (users.isEmpty()) {
       return null;
     }
-    System.out.println("found user");
-    System.out.println(users.get(0).getPassword());
-
+    
     if (!BCrypt.checkpw(password, users.get(0).getPassword())) {
       return null;
     }

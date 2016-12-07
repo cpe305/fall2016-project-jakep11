@@ -37,8 +37,7 @@ public class LoginController {
    */
   @RequestMapping(value = "/createUser", method = RequestMethod.POST)
   public User registerUserAccount(@RequestParam(value = "username") String username,
-      @RequestParam(value = "password") String password, HttpServletResponse response)
-      throws Exception {
+      @RequestParam(value = "password") String password, HttpServletResponse response) {
 
     User registered =
         service.registerNewUserAccount(username, BCrypt.hashpw(password, BCrypt.gensalt()));

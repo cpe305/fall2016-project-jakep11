@@ -20,6 +20,7 @@ public class TriathlonDistance {
 
   /**
    * TriathlonDistance creates a default distance of a triathlon.
+   * 
    * @param dist distance of triathlon
    */
   public TriathlonDistance(StandardDistance dist) {
@@ -51,6 +52,7 @@ public class TriathlonDistance {
 
   /**
    * TriathlonDistance constructor.
+   * 
    * @param swim swim
    * @param bike bike
    * @param run run
@@ -99,7 +101,9 @@ public class TriathlonDistance {
       return false;
     }
     TriathlonDistance triDist = (TriathlonDistance) obj;
-
-    return swim == triDist.getSwim() && bike == triDist.getBike() && run == triDist.getRun();
+    double epsilon = 0.0001;
+    return ((swim - triDist.getSwim()) < epsilon) 
+        && ((bike - triDist.getBike()) < epsilon)
+        && ((run - triDist.getRun()) < epsilon);
   }
 }

@@ -17,25 +17,18 @@ public class UserService implements IUserService {
   @Transactional
   @Override
   public User registerNewUserAccount(String username, String password) {
-
     User user = new User(username, password);
-
     if (usernameExists(username)) {
       return null;
     }
-
-    System.out.println("Trying to register a new user from UserService Class");
     return repository.save(user);
   }
 
   private boolean usernameExists(String username) {
-    System.out.println("checking if username exists");
-    if (repository.findByUsername(username).size() > 0) {
-      System.out.println("username exists");
+    //Checking if username exists
+    if (!repository.findByUsername(username).isEmpty()) {
       return true;
     }
-    System.out.println("username does not exists");
-
     return false;
   }
 }

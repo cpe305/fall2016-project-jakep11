@@ -21,7 +21,6 @@ public class Estimator {
   public static Triathlon estimateNewTriathlon(ArrayList<Triathlon> previousTris,
       Triathlon newTri) {
 
-    TriathlonDistance avgTriDist = Stats.getAverageDistanceFromAllTris(previousTris);
     Triathlon avgTriPace = Stats.getAveragePaceFromAllTris(previousTris);
 
     double swimPace =
@@ -66,7 +65,7 @@ public class Estimator {
         scalar = 1.03;
       }
     } catch (Exception exception) {
-      
+      System.out.println(exception);
     }
 
 
@@ -92,8 +91,6 @@ public class Estimator {
       case DRY:
         tri.setTime(scaleRunTime(1.1, tri.getTime()));
         break;
-      case SUNNY:
-        break;
       case LIGHT_RAIN:
         tri.setTime(scaleAllTimes(1.05, tri.getTime()));
         break;
@@ -107,8 +104,8 @@ public class Estimator {
       case HUMID:
         tri.setTime(scaleBikeTime(1.05, tri.getTime()));
         tri.setTime(scaleRunTime(1.1, tri.getTime()));
-
         break;
+      case SUNNY:
       default:
         break;
     }

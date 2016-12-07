@@ -43,7 +43,6 @@ public class EstimatorController {
       @RequestParam(value = "temperature") double temperature,
       @RequestParam(value = "username") String username) {
 
-    System.out.println("Estimating new Tri");
     TriathlonDistance triDist = new TriathlonDistance(swimDist, bikeDist, runDist);
     TriathlonTime triTime = new TriathlonTime();
     TriathlonElevation triElev = new TriathlonElevation(bikeElev, runElev);
