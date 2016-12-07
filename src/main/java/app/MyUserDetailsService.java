@@ -25,9 +25,11 @@ public class MyUserDetailsService implements UserDetailsService {
 
   /** 
    * UserDetails method that helps authentication during log in.
-   * 
+   * @param username username to search for in the database of users
    */
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  
+  @Override
+  public UserDetails loadUserByUsername(String username) {
 
     List<User> users = userRepository.findByUsername(username);
 
@@ -48,7 +50,7 @@ public class MyUserDetailsService implements UserDetailsService {
   }
 
   private static List<GrantedAuthority> getAuthorities(List<String> roles) {
-    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    List<GrantedAuthority> authorities = new ArrayList<>();
     for (String role : roles) {
       authorities.add(new SimpleGrantedAuthority(role));
     }

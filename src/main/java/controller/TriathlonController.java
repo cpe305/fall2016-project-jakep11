@@ -9,10 +9,7 @@ import model.TriathlonTime;
 import model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -45,7 +41,7 @@ public class TriathlonController {
    */
   @RequestMapping("/triathlons")
   public List<Triathlon> getTriathlonsForUser(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     // Only one user
     for (User user : userRepo.findByUsername(username)) {
       for (Long id : user.getTris()) {
@@ -98,7 +94,7 @@ public class TriathlonController {
       @RequestParam(value = "runTime") int runTime,
       @RequestParam(value = "bikeElev") double bikeElev,
       @RequestParam(value = "runElev") double runElev,
-      @RequestParam(value = "location") String location, @RequestParam(value = "date") String date,
+      @RequestParam(value = "location") String location, @RequestParam(value = "date") long date,
       @RequestParam(value = "startTime") String startTime,
       @RequestParam(value = "weather") String weather,
       @RequestParam(value = "temperature") double temperature,
@@ -108,7 +104,7 @@ public class TriathlonController {
     TriathlonTime triTime = new TriathlonTime(new Time(swimTime), new Time(t1Time),
         new Time(bikeTime), new Time(t2Time), new Time(runTime));
     TriathlonElevation triElev = new TriathlonElevation(bikeElev, runElev);
-    Triathlon newTri = new Triathlon(triDist, triElev, triTime, name, location, new Date(),
+    Triathlon newTri = new Triathlon(triDist, triElev, triTime, name, location, new Date(date),
         startTime, WeatherConditions.valueOf(weather), temperature);
     
 

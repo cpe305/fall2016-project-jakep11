@@ -31,7 +31,7 @@ public class User {
   public User(String username, String password) {
     this.username = username;
     this.password = password;
-    triathlons = new ArrayList<Long>();
+    triathlons = new ArrayList<>();
   }
 
   public String getUsername() {
@@ -58,7 +58,7 @@ public class User {
     triathlons.remove(id);
   }
 
-  public ArrayList<Long> getTris() {
+  public List<Long> getTris() {
     return triathlons;
   }
 
@@ -82,7 +82,7 @@ public class User {
    * @return returns a list of roles. Only USER roles
    */
   public List<String> getRoles() {
-    ArrayList<String> list = new ArrayList<String>();
+    ArrayList<String> list = new ArrayList<>();
     list.add("USER");
     return list;
   }

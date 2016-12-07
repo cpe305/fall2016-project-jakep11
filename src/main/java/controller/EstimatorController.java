@@ -1,7 +1,12 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Date;
+import model.Estimator;
+import model.Triathlon;
+import model.Triathlon.WeatherConditions;
+import model.TriathlonDistance;
+import model.TriathlonElevation;
+import model.TriathlonTime;
+import model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,16 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import model.Estimator;
-import model.Time;
-import model.Triathlon;
-import model.TriathlonDistance;
-import model.TriathlonElevation;
-import model.TriathlonTime;
-import model.User;
-import model.Triathlon.WeatherConditions;
 import repositories.TriathlonRepository;
 import repositories.UserRepository;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 public class EstimatorController {
@@ -35,7 +35,7 @@ public class EstimatorController {
       @RequestParam(value = "swimDist") double swimDist,
       @RequestParam(value = "bikeDist") double bikeDist,
       @RequestParam(value = "runDist") double runDist,
-      
+
       @RequestParam(value = "bikeElev") double bikeElev,
       @RequestParam(value = "runElev") double runElev,
       @RequestParam(value = "startTime") String startTime,
@@ -46,21 +46,21 @@ public class EstimatorController {
     TriathlonDistance triDist = new TriathlonDistance(swimDist, bikeDist, runDist);
     TriathlonTime triTime = new TriathlonTime();
     TriathlonElevation triElev = new TriathlonElevation(bikeElev, runElev);
-    Triathlon newTri = new Triathlon(triDist, triElev, triTime, name, "", new Date(),
-        startTime, WeatherConditions.valueOf(weather), temperature);
-    
-    ArrayList<Triathlon> previousTris = new ArrayList<Triathlon>();
-    
+    Triathlon newTri = new Triathlon(triDist, triElev, triTime, name, "", new Date(), startTime,
+        WeatherConditions.valueOf(weather), temperature);
+
+    ArrayList<Triathlon> previousTris = new ArrayList<>();
+
     for (User user : userRepo.findByUsername(username)) {
       for (Long id : user.getTris()) {
         previousTris.add(triRepo.findOne(id));
       }
     }
-    
-    
-   Triathlon estimatedTri = Estimator.estimateNewTriathlon(previousTris, newTri);
-    
-    
+
+
+    Triathlon estimatedTri = Estimator.estimateNewTriathlon(previousTris, newTri);
+
+
     return estimatedTri.getTime();
   }
 }

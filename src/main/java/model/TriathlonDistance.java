@@ -64,7 +64,9 @@ public class TriathlonDistance {
   }
 
   public TriathlonDistance() {
-
+    this.swim = 0;
+    this.bike = 0;
+    this.run = 0;
   }
 
   public double getSwim() {
@@ -105,5 +107,10 @@ public class TriathlonDistance {
     return ((swim - triDist.getSwim()) < epsilon) 
         && ((bike - triDist.getBike()) < epsilon)
         && ((run - triDist.getRun()) < epsilon);
+  }
+  
+  @Override
+  public int hashCode() {
+    return 1;
   }
 }

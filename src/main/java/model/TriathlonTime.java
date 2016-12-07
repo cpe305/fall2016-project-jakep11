@@ -50,7 +50,11 @@ public class TriathlonTime {
   }
   
   public TriathlonTime() {
-    
+    this.swimTime = new Time();
+    this.t1Time = new Time();
+    this.bikeTime = new Time();
+    this.t2Time = new Time();
+    this.runTime = new Time();
   }
 
   public Time getSwimTime() {
@@ -108,15 +112,22 @@ public class TriathlonTime {
     }
     TriathlonTime triTime = (TriathlonTime) obj;
     
-    return swimTime.equals(triTime.getSwimTime()) && t1Time.equals(triTime.getT1Time())
+    boolean isEqual = swimTime.equals(triTime.getSwimTime()) && t1Time.equals(triTime.getT1Time())
         && bikeTime.equals(triTime.getBikeTime()) && t2Time.equals(triTime.getT2Time())
         && runTime.equals(triTime.getRunTime());
+    
+    return isEqual;
   }
 
   @Override
   public String toString() {
     return "S: " + swimTime + ". T1: " + t1Time + ". Bike: " + bikeTime + ". T2: " + t2Time
         + ". Run: " + runTime;
+  }
+  
+  @Override
+  public int hashCode() {
+    return 1;
   }
 }
 

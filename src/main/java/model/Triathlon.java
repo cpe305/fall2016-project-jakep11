@@ -18,6 +18,46 @@ public class Triathlon {
   }
 
 
+
+  /**
+   * Triathlon constructor.
+   * @param distance distance
+   * @param elevation elevation
+   * @param time time
+   * @param name name
+   * @param location location
+   * @param date date
+   * @param startTime startTime
+   * @param weather weather
+   * @param temperature temperature
+   */
+  public Triathlon(TriathlonDistance distance, TriathlonElevation elevation, TriathlonTime time,
+      String name, String location, Date date, String startTime, WeatherConditions weather,
+      double temperature) {
+    this.distance = distance;
+    this.elevation = elevation;
+    this.time = time;
+    this.name = name;
+    this.location = location;
+    this.date = date;
+    this.startTime = startTime;
+    this.weather = weather;
+    this.temperature = temperature;
+  }
+
+  public Triathlon() {
+    this.distance = null;
+    this.elevation = null;
+    this.time = null;
+    this.name = null;
+    this.location =  null;
+    this.date = null;
+    this.startTime = null;
+    this.weather = null;
+    this.temperature = 72;
+  }
+
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -115,38 +155,6 @@ public class Triathlon {
 
   public void setStartTime(String startTime) {
     this.startTime = startTime;
-  }
-
-
-
-  /**
-   * Triathlon constructor.
-   * @param distance distance
-   * @param elevation elevation
-   * @param time time
-   * @param name name
-   * @param location location
-   * @param date date
-   * @param startTime startTime
-   * @param weather weather
-   * @param temperature temperature
-   */
-  public Triathlon(TriathlonDistance distance, TriathlonElevation elevation, TriathlonTime time,
-      String name, String location, Date date, String startTime, WeatherConditions weather,
-      double temperature) {
-    this.distance = distance;
-    this.elevation = elevation;
-    this.time = time;
-    this.name = name;
-    this.location = location;
-    this.date = date;
-    this.startTime = startTime;
-    this.weather = weather;
-    this.temperature = temperature;
-  }
-
-  public Triathlon() {
-
   }
 
 

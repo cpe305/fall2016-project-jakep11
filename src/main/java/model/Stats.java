@@ -1,9 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class Stats {
+public final class Stats {
+
+  private Stats() {
+    throw new AssertionError();
+  }
 
   public static double bikeSpeed(Triathlon tri) {
     return tri.getDistance().getBike() / tri.getTime().getBikeTime().getTimeInHours();
@@ -17,7 +22,7 @@ public class Stats {
     return tri.getTime().getSwimTime().getTimeInMinutes() / tri.getDistance().getSwim() * 100;
   }
 
-  public static double getAverageSwimDistance(ArrayList<Triathlon> triathlons) {
+  public static double getAverageSwimDistance(List<Triathlon> triathlons) {
     double tempSwimD = 0;
     double count = 0;
 
@@ -28,7 +33,7 @@ public class Stats {
     return tempSwimD / count;
   }
 
-  public static double getAverageBikeDistance(ArrayList<Triathlon> triathlons) {
+  public static double getAverageBikeDistance(List<Triathlon> triathlons) {
     double tempBikeD = 0;
     double count = 0;
 
@@ -39,7 +44,7 @@ public class Stats {
     return tempBikeD / count;
   }
 
-  public static double getAverageRunDistance(ArrayList<Triathlon> triathlons) {
+  public static double getAverageRunDistance(List<Triathlon> triathlons) {
     double tempRunD = 0;
     double count = 0;
 
@@ -55,12 +60,12 @@ public class Stats {
         getAverageBikeDistance(triathlons), getAverageRunDistance(triathlons));
   }
 
-  public static Time getAverageSwimTime(ArrayList<Triathlon> triathlons) {
+  public static Time getAverageSwimTime(List<Triathlon> triathlons) {
     Time swimT = new Time(0);
     double count = 0;
 
     for (Triathlon t : triathlons) {
-      if (t.getTime() == null)  {
+      if (t.getTime() == null) {
         continue;
       }
       swimT.setTime(t.getTime().getSwimTime().getTimeInSeconds() + swimT.getTimeInSeconds());
@@ -71,7 +76,7 @@ public class Stats {
     return swimT;
   }
 
-  public static Time getAverageT1Time(ArrayList<Triathlon> triathlons) {
+  public static Time getAverageT1Time(List<Triathlon> triathlons) {
     Time t1T = new Time(0);
     double count = 0;
 
@@ -84,7 +89,7 @@ public class Stats {
     return t1T;
   }
 
-  public static Time getAverageBikeTime(ArrayList<Triathlon> triathlons) {
+  public static Time getAverageBikeTime(List<Triathlon> triathlons) {
     Time bikeT = new Time(0);
     double count = 0;
 
@@ -101,7 +106,7 @@ public class Stats {
     return bikeT;
   }
 
-  public static Time getAverageT2Time(ArrayList<Triathlon> triathlons) {
+  public static Time getAverageT2Time(List<Triathlon> triathlons) {
     Time t2T = new Time(0);
     double count = 0;
 
@@ -109,12 +114,12 @@ public class Stats {
       t2T.setTime(t.getTime().getT2Time().getTimeInSeconds() + t2T.getTimeInSeconds());
       count++;
     }
-    
+
     t2T.setTime(t2T.getTimeInSeconds() / (int) count);
     return t2T;
   }
 
-  public static Time getAverageRunTime(ArrayList<Triathlon> triathlons) {
+  public static Time getAverageRunTime(List<Triathlon> triathlons) {
     Time runT = new Time(0);
     double count = 0;
 
@@ -125,22 +130,23 @@ public class Stats {
       runT.setTime(t.getTime().getRunTime().getTimeInSeconds() + runT.getTimeInSeconds());
       count++;
     }
-    
+
     runT.setTime(runT.getTimeInSeconds() / (int) count);
     return runT;
   }
 
-  public static TriathlonTime getAverageTimeFromAllTris(ArrayList<Triathlon> triathlons) {
+  public static TriathlonTime getAverageTimeFromAllTris(List<Triathlon> triathlons) {
 
     return new TriathlonTime(getAverageSwimTime(triathlons), getAverageT1Time(triathlons),
         getAverageBikeTime(triathlons), getAverageT2Time(triathlons),
         getAverageRunTime(triathlons));
   }
 
-  public static Triathlon getAveragePaceFromAllTris(ArrayList<Triathlon> triathlons) {
+  public static Triathlon getAveragePaceFromAllTris(List<Triathlon> triathlons) {
     Triathlon newTri = new Triathlon();
 
-    newTri.setDistance(getAverageDistanceFromAllTris(triathlons));
+    ArrayList<Triathlon> triathlonArrayList = new ArrayList<>(triathlons);
+    newTri.setDistance(getAverageDistanceFromAllTris(triathlonArrayList));
     newTri.setTime(getAverageTimeFromAllTris(triathlons));
 
     return newTri;

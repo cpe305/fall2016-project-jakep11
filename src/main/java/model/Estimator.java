@@ -5,11 +5,16 @@ import model.Triathlon.WeatherConditions;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 
+public final class Estimator {
 
-public class Estimator {
+  // Suppress default constructor for noninstantiability
+  private Estimator() {
+    throw new AssertionError();
+  }
 
   /**
    * estimateNewTriathlon estimates a new Triathlon.
@@ -18,10 +23,10 @@ public class Estimator {
    * @param newTri newTri
    * @return returns a new estimated triathlon
    */
-  public static Triathlon estimateNewTriathlon(ArrayList<Triathlon> previousTris,
-      Triathlon newTri) {
+  public static Triathlon estimateNewTriathlon(List<Triathlon> previousTris, Triathlon newTri) {
 
-    Triathlon avgTriPace = Stats.getAveragePaceFromAllTris(previousTris);
+    ArrayList<Triathlon> previousTrisArrayList = new ArrayList<>(previousTris);
+    Triathlon avgTriPace = Stats.getAveragePaceFromAllTris(previousTrisArrayList);
 
     double swimPace =
         avgTriPace.getDistance().getSwim() / avgTriPace.getTime().getSwimTime().getTimeInSeconds();
@@ -38,8 +43,8 @@ public class Estimator {
     double newRunTime = newTri.getDistance().getRun() / runPace;
 
     newTri.setTime(new TriathlonTime(new Time((int) newSwimTime),
-        Stats.getAverageT1Time(previousTris), new Time((int) newBikeTime),
-        Stats.getAverageT2Time(previousTris), new Time((int) newRunTime)));
+        Stats.getAverageT1Time(previousTrisArrayList), new Time((int) newBikeTime),
+        Stats.getAverageT2Time(previousTrisArrayList), new Time((int) newRunTime)));
 
     scaleForWeather(newTri.getWeather(), newTri);
     scaleForTemperature(newTri.getTemperature(), newTri);

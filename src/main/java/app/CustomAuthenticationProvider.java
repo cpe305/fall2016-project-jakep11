@@ -22,7 +22,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
   UserRepository userRepo;// + setter
 
   @Override
-  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+  public Authentication authenticate(Authentication authentication) {
     String username = authentication.getName();
     String password = authentication.getCredentials().toString();
 

@@ -325,8 +325,9 @@ app.controller('addTriathlon', function($scope, $http, $rootScope, $location) {
 	}
 	
 	$scope.addTriathlon = function() {
+		console.log($scope.date.getTime());
 		var tri = new Triathlon($scope.name, $scope.distance, $scope.bikeElev,
-				$scope.runElev, $scope.location, $scope.date, $scope.startTime,
+				$scope.runElev, $scope.location, $scope.date.getTime(), $scope.startTime,
 				$scope.temperature, convertTime($scope.time), $scope.weather,
 				$rootScope.name);
 		$http({

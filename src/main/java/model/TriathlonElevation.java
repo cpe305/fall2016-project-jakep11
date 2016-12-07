@@ -19,7 +19,8 @@ public class TriathlonElevation {
   }
   
   public TriathlonElevation() {
-    
+    this.bikeElevation = 0;
+    this.runElevation = 0;
   }
 
   public double getBikeElevation() {

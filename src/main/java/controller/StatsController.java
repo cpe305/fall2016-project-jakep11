@@ -28,7 +28,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averageSwimTime", method = RequestMethod.GET)
   public int averageSwimTime(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
@@ -38,7 +38,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averageBikeTime", method = RequestMethod.GET)
   public int averageBikeTime(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
@@ -48,7 +48,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averageRunTime", method = RequestMethod.GET)
   public int averageRunTime(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
@@ -58,7 +58,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averageSwimDistance", method = RequestMethod.GET)
   public double averageSwimDistance(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
@@ -68,7 +68,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averageBikeDistance", method = RequestMethod.GET)
   public double averageBikeDistance(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
@@ -78,7 +78,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averageRunDistance", method = RequestMethod.GET)
   public double averageRunDistance(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
@@ -88,7 +88,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averageTimeFromAllTris", method = RequestMethod.GET)
   public TriathlonTime averageTimeFromAllTris(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
@@ -98,7 +98,7 @@ public class StatsController {
   
   @RequestMapping(path = "/averagePaceFromAllTris", method = RequestMethod.GET)
   public Triathlon averagePaceFromAllTris(@RequestParam(value = "username") String username) {
-    ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
+    ArrayList<Triathlon> tris = new ArrayList<>();
     User user = userRepo.findByUsername(username).get(0);
     for (Long l : user.getTris()) {
       tris.add(triRepo.findOne(l));
