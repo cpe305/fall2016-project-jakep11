@@ -19,6 +19,29 @@ public class Triathlon {
 
 
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  @OneToOne(cascade = CascadeType.ALL)
+  private TriathlonElevation elevation;
+  
+  @OneToOne(cascade = CascadeType.ALL)
+  private TriathlonDistance distance;
+  
+  @OneToOne(cascade = CascadeType.ALL)
+  private TriathlonTime time;
+  
+  private String name;
+  private String location;
+  private Date date;
+  
+  
+  private String startTime;
+  private WeatherConditions weather;
+  private double temperature;
+
+
+
   /**
    * Triathlon constructor.
    * @param distance distance
@@ -57,28 +80,8 @@ public class Triathlon {
     this.temperature = 72;
   }
 
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  @OneToOne(cascade = CascadeType.ALL)
-  private TriathlonElevation elevation;
-  
-  @OneToOne(cascade = CascadeType.ALL)
-  private TriathlonDistance distance;
-  
-  @OneToOne(cascade = CascadeType.ALL)
-  private TriathlonTime time;
-  
-  private String name;
-  private String location;
-  private Date date;
   
   
-  private String startTime;
-  private WeatherConditions weather;
-  private double temperature;
-
   public Long getId() {
     return id;
   }

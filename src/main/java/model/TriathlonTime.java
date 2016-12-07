@@ -112,11 +112,9 @@ public class TriathlonTime {
     }
     TriathlonTime triTime = (TriathlonTime) obj;
     
-    boolean isEqual = swimTime.equals(triTime.getSwimTime()) && t1Time.equals(triTime.getT1Time())
+    return swimTime.equals(triTime.getSwimTime()) && t1Time.equals(triTime.getT1Time())
         && bikeTime.equals(triTime.getBikeTime()) && t2Time.equals(triTime.getT2Time())
         && runTime.equals(triTime.getRunTime());
-    
-    return isEqual;
   }
 
   @Override

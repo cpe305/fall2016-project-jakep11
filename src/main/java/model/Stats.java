@@ -55,7 +55,7 @@ public final class Stats {
     return tempRunD / count;
   }
 
-  public static TriathlonDistance getAverageDistanceFromAllTris(ArrayList<Triathlon> triathlons) {
+  public static TriathlonDistance getAverageDistanceFromAllTris(List<Triathlon> triathlons) {
     return new TriathlonDistance(getAverageSwimDistance(triathlons),
         getAverageBikeDistance(triathlons), getAverageRunDistance(triathlons));
   }

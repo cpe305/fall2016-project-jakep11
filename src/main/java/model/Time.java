@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Time {
 
-  static final int secPerHour = 3600;
+  static final int SEC_PER_HOUR = 3600;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,8 +45,8 @@ public class Time {
    * @param second time in seconds
    */
   public Time(int second) {
-    this.hour = second / secPerHour;
-    this.minute = (second % secPerHour) / 60;
+    this.hour = second / SEC_PER_HOUR;
+    this.minute = (second % SEC_PER_HOUR) / 60;
     this.second = second % 60;
   }
 
@@ -59,7 +59,7 @@ public class Time {
    */
   public void setTime(int newHour, int newMinute, int newSecond) {
     getTimeInSeconds();
-    hour = newHour % 24 + newMinute / 60 + newSecond / secPerHour;
+    hour = newHour % 24 + newMinute / 60 + newSecond / SEC_PER_HOUR;
     minute = newMinute % 60 + newSecond / 60;
     second = newSecond % 60;
   }
@@ -70,13 +70,13 @@ public class Time {
    * @param second a
    */
   public void setTime(int second) {
-    this.hour = second / secPerHour;
+    this.hour = second / SEC_PER_HOUR;
     this.minute = (second / 60) % 60;
     this.second = second % 60;
   }
 
   public int getTimeInSeconds() {
-    return secPerHour * hour + 60 * minute + second;
+    return SEC_PER_HOUR * hour + 60 * minute + second;
   }
 
   public double getTimeInMinutes() {
@@ -84,7 +84,7 @@ public class Time {
   }
 
   public double getTimeInHours() {
-    return hour + minute / 60.0 + second / (double) secPerHour;
+    return hour + minute / 60.0 + second / (double) SEC_PER_HOUR;
   }
 
   @Override
