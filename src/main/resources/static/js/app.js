@@ -198,7 +198,7 @@ app.controller('estimator', function($scope, $http, $rootScope) {
 	$scope.estimatedTri_labels = ['Triathlon Time By Sport'];
 	  $scope.estimatedTri_series = ['Swim', 'Bike', 'Run'];
 	  
-	  $scope.singleTriSwim_options = {
+	  $scope.estimatedTri_options = {
 		  scales: {
 			    yAxes: [{
 			    	

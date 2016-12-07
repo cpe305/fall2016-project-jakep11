@@ -31,7 +31,7 @@ public class Estimator {
         avgTriPace.getDistance().getRun() / avgTriPace.getTime().getRunTime().getTimeInSeconds();
 
 
-    newTri = scaleForElevation(newTri.getElevation(), newTri);
+    scaleForElevation(newTri.getElevation(), newTri);
 
     double newSwimTime = newTri.getDistance().getSwim() / swimPace;
     double newBikeTime = newTri.getDistance().getBike() / bikePace;
@@ -41,9 +41,9 @@ public class Estimator {
         Stats.getAverageT1Time(previousTris), new Time((int) newBikeTime),
         Stats.getAverageT2Time(previousTris), new Time((int) newRunTime)));
 
-    newTri = scaleForWeather(newTri.getWeather(), newTri);
-    newTri = scaleForTemperature(newTri.getTemperature(), newTri);
-    newTri = scaleForStartTime(newTri.getStartTime(), newTri);
+    scaleForWeather(newTri.getWeather(), newTri);
+    scaleForTemperature(newTri.getTemperature(), newTri);
+    scaleForStartTime(newTri.getStartTime(), newTri);
 
     return newTri;
   }
