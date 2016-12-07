@@ -21,6 +21,7 @@ public class EstimatorTest {
 
   Triathlon tri1;
   Triathlon tri2;
+  Triathlon tri3, tri4, tri5, tri6;
   TriathlonTime triTime;
   ArrayList<Triathlon> triList;
   double epsilon = 0.0001;
@@ -41,15 +42,24 @@ public class EstimatorTest {
     triTime = new TriathlonTime(time1, time2, time3, time4, time5);
 
     WeatherConditions weather1 = WeatherConditions.SUNNY;
-    WeatherConditions weather2 = WeatherConditions.SUNNY;
+    WeatherConditions weather2 = WeatherConditions.LIGHT_RAIN;
 
     double temp = 68;
 
     tri1 = new Triathlon(triDist, triElev, triTime, "TestTri", "Venus", date, "6:00AM", weather1,
         temp);
-    tri2 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "7:00AM", weather2,
+    tri2 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "11:00AM", weather2,
         temp);
 
+    tri3 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "11:00AM", WeatherConditions.HEAVY_RAIN,
+        temp);
+    tri4 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "11:00AM", WeatherConditions.HEAVY_RAIN,
+        temp);
+    tri5 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "11:00AM", WeatherConditions.HEAVY_RAIN,
+        temp);
+    tri6 = new Triathlon(triDist, triElev, triTime, "TestTri2", "Mars", date, "11:00AM", WeatherConditions.HEAVY_RAIN,
+        temp);
+    
     triList = new ArrayList<Triathlon>();
     triList.add(tri1);
     triList.add(tri2);
@@ -63,6 +73,14 @@ public class EstimatorTest {
   @Test
   public void estimatorTest2() {
     Estimator.estimateNewTriathlon(triList, tri2);
+  }
+  
+  @Test
+  public void miscEstimatorTest() {
+    Estimator.estimateNewTriathlon(triList, tri3);
+    Estimator.estimateNewTriathlon(triList, tri4);
+    Estimator.estimateNewTriathlon(triList, tri5);
+    Estimator.estimateNewTriathlon(triList, tri6);
   }
 
   @Test

@@ -22,5 +22,6 @@ public class TimeTest {
     
     Time time3 = new Time(59);
     assertEquals(59, time3.getTimeInSeconds());
+    Time time4 = new Time();
   }
 }

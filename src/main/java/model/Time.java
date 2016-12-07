@@ -76,7 +76,7 @@ public class Time {
   }
   
   public double getTimeInMinutes() {
-    return 60 * hour + minute + second / (double)60.0;
+    return 60 * hour + minute + second / 60.0;
   }
   
   public double getTimeInHours() {
