@@ -47,8 +47,6 @@ public class TriathlonController {
   public List<Triathlon> getTriathlonsForUser(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<Triathlon>();
     // Only one user
-    System.out.println("hi");
-
     for (User user : userRepo.findByUsername(username)) {
       for (Long id : user.getTris()) {
         tris.add(triRepo.findOne(id));
