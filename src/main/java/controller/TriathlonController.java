@@ -50,11 +50,7 @@ public class TriathlonController {
     System.out.println("hi");
 
     for (User user : userRepo.findByUsername(username)) {
-      System.out.println(user);
-      System.out.println(user.getTris().size());
-
       for (Long id : user.getTris()) {
-        System.out.println(id);
         tris.add(triRepo.findOne(id));
       }
     }

@@ -1,0 +1,212 @@
+<h3 ng-hide="triathlonList.length">No triathlons entered to calculate estimate from. Please add a new Triathlon!</h3>
+
+<div ng-show="triathlonList.length">
+
+
+
+
+<h2>Estimate a triathlon!</h2>
+
+
+
+<div class="row">
+	
+	<div class="col-md-6">
+	<form ng-submit="estimateTriathlon()">
+
+	<div class="form-group">
+		<label for="distance">Distance:</label> <select class="form-control"
+			id="distance" ng-model="distanceType" ng-change="updateDistance()">
+			<option>Sprint</option>
+			<option>Olympic</option>
+			<option>Half</option>
+			<option>Full</option>
+			<option>Custom</option>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label for="distanceSwim">Swim Distance (meters):</label> <input
+			class="form-control" id="distanceSwim" ng-model="distance.swim"
+			ng-disabled="distanceType != 'Custom'"> <label
+			for="distanceBike">Bike Distance (miles):</label> <input
+			class="form-control" id="distanceBike" ng-model="distance.bike"
+			ng-disabled="distanceType != 'Custom'"> <label
+			for="distanceRun">Run Distance (miles):</label> <input
+			class="form-control" id="distanceRun" ng-model="distance.run"
+			ng-disabled="distanceType != 'Custom'">
+	</div>
+
+
+
+	<div class="form-group">
+		<label for="bikeElev">Bike Elevation change (feet):</label> <input
+			class="form-control" id="bikeElev" ng-model="bikeElev">
+	</div>
+	<div class="form-group">
+		<label for="runElev">Run Elevation change (feet):</label> <input
+			class="form-control" id="runElev" ng-model="runElev">
+	</div>
+
+
+	<div class="form-group">
+		<label for="startTime">Start Time:</label> <select
+			class="form-control" id="startTime" ng-model="startTime">
+
+			<option value="5:00 AM">5:00 AM</option>
+			<option value="5:15 AM">5:15 AM</option>
+			<option value="5:30 AM">5:30 AM</option>
+			<option value="5:45 AM">5:45 AM</option>
+
+			<option value="6:00 AM">6:00 AM</option>
+			<option value="6:15 AM">6:15 AM</option>
+			<option value="6:30 AM">6:30 AM</option>
+			<option value="6:45 AM">6:45 AM</option>
+
+			<option value="7:00 AM">7:00 AM</option>
+			<option value="7:15 AM">7:15 AM</option>
+			<option value="7:30 AM">7:30 AM</option>
+			<option value="7:45 AM">7:45 AM</option>
+
+			<option value="8:00 AM">8:00 AM</option>
+			<option value="8:15 AM">8:15 AM</option>
+			<option value="8:30 AM">8:30 AM</option>
+			<option value="8:45 AM">8:45 AM</option>
+
+			<option value="9:00 AM">9:00 AM</option>
+			<option value="9:15 AM">9:15 AM</option>
+			<option value="9:30 AM">9:30 AM</option>
+			<option value="9:45 AM">9:45 AM</option>
+
+			<option value="10:00 AM">10:00 AM</option>
+			<option value="10:15 AM">10:15 AM</option>
+			<option value="10:30 AM">10:30 AM</option>
+			<option value="10:45 AM">10:45 AM</option>
+
+			<option value="11:00 AM">11:00 AM</option>
+			<option value="11:15 AM">11:15 AM</option>
+			<option value="11:30 AM">11:30 AM</option>
+			<option value="11:45 AM">11:45 AM</option>
+
+			<option value="12:00 PM">12:00 PM</option>
+			<option value="12:15 PM">12:15 PM</option>
+			<option value="12:30 PM">12:30 PM</option>
+			<option value="12:45 PM">12:45 PM</option>
+
+			<option value="1:00 PM">1:00 PM</option>
+			<option value="1:15 PM">1:15 PM</option>
+			<option value="1:30 PM">1:30 PM</option>
+			<option value="1:45 PM">1:45 PM</option>
+
+			<option value="2:00 PM">2:00 PM</option>
+			<option value="2:15 PM">2:15 PM</option>
+			<option value="2:30 PM">2:30 PM</option>
+			<option value="2:45 PM">2:45 PM</option>
+
+			<option value="3:00 PM">3:00 PM</option>
+			<option value="3:15 PM">3:15 PM</option>
+			<option value="3:30 PM">3:30 PM</option>
+			<option value="3:45 PM">3:45 PM</option>
+
+			<option value="4:00 PM">4:00 PM</option>
+			<option value="4:15 PM">4:15 PM</option>
+			<option value="4:30 PM">4:30 PM</option>
+			<option value="4:45 PM">4:45 PM</option>
+
+			<option value="5:00 PM">5:00 PM</option>
+			<option value="5:15 PM">5:15 PM</option>
+			<option value="5:30 PM">5:30 PM</option>
+			<option value="5:45 PM">5:45 PM</option>
+
+			<option value="6:00 PM">6:00 PM</option>
+			<option value="6:15 PM">6:15 PM</option>
+			<option value="6:30 PM">6:30 PM</option>
+			<option value="6:45 PM">6:45 PM</option>
+
+			<option value="7:00 PM">7:00 PM</option>
+			<option value="7:15 PM">7:15 PM</option>
+			<option value="7:30 PM">7:30 PM</option>
+			<option value="7:45 PM">7:45 PM</option>
+
+			<option value="8:00 PM">8:00 PM</option>
+			<option value="8:15 PM">8:15 PM</option>
+			<option value="8:30 PM">8:30 PM</option>
+			<option value="8:45 PM">8:45 PM</option>
+
+			<option value="9:00 PM">9:00 PM</option>
+			<option value="9:15 PM">9:15 PM</option>
+			<option value="9:30 PM">9:30 PM</option>
+			<option value="9:45 PM">9:45 PM</option>
+
+			<option value="10:00 PM">10:00 PM</option>
+			<option value="10:15 PM">10:15 PM</option>
+			<option value="10:30 PM">10:30 PM</option>
+			<option value="10:45 PM">10:45 PM</option>
+
+			<option value="11:00 PM">11:00 PM</option>
+			<option value="11:15 PM">11:15 PM</option>
+			<option value="11:30 PM">11:30 PM</option>
+			<option value="11:45 PM">11:45 PM</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="weather">Weather Conditions:</label> <select
+			class="form-control" id="weather" ng-model="weather">
+			<option value="SUNNY">Sunny</option>
+			<option value="WINDY">Windy</option>
+			<option value="LIGHT_RAIN">Light Rain</option>
+			<option value="HEAVY_RAIN">Heavy Rain</option>
+			<option value="DRY">Dry</option>
+			<option value="HUMID">Humid</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="temperature">Temperature (F):</label> <input type="number"
+			class="form-control" id="temperature" ng-model="temperature">
+	</div>
+
+	<button style="margin-bottom: 20px" type="submit"
+		class="btn btn-success" ng-submit="estimateTriathlon()">Submit</button>
+</form>
+	</div>
+	
+	<div class="col-md-6">
+	<div ng-show="estimatedSwimTime">
+
+	<div class="alert alert-success">
+
+		<h3 style="margin-top: 5px">
+			<strong>Total Time: {{estimatedTotalTime | secondsToDateTime
+				| date:'HH:mm:ss'}}</strong>
+		</h3>
+		<p>
+			<b>Time</b>
+		</p>
+		<div>Swim: {{estimatedSwimTime | secondsToDateTime |
+			date:'HH:mm:ss'}}</div>
+		<div>T1: {{estimatedT1Time | secondsToDateTime |
+			date:'HH:mm:ss'}}</div>
+		<div>Bike: {{estimatedBikeTime | secondsToDateTime |
+			date:'HH:mm:ss'}}</div>
+		<div>T2: {{estimatedT2Time | secondsToDateTime |
+			date:'HH:mm:ss'}}</div>
+		<div>Run: {{estimatedRunTime | secondsToDateTime |
+			date:'HH:mm:ss'}}</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<canvas id="swimBar" class="chart chart-bar"
+				chart-data="singleTriSwim_data" chart-labels="singleTriSwim_labels"
+				chart-options="singleTriSwim_options"
+				chart-series="singleTriSwim_series"></canvas>
+		</div>
+	</div>
+</div>
+	</div>
+</div>
+
+
+</div>
+
+
