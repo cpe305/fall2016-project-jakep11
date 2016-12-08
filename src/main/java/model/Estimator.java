@@ -70,7 +70,7 @@ public final class Estimator {
         scalar = 1.03;
       }
     } catch (Exception exception) {
-      exception.getMessage();
+      System.out.println(exception.getMessage());
     }
 
 
