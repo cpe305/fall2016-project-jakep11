@@ -7,14 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 
 public final class Estimator {
 
-  private static final Logger log = LoggerFactory.getLogger(Estimator.class);
   
   // Suppress default constructor for noninstantiability
   private Estimator() {
@@ -77,8 +73,7 @@ public final class Estimator {
         scalar = 1.03;
       }
     } catch (Exception exception) {
-      
-      log.info(exception.getMessage());
+      System.out.println(exception);
     }
 
 
