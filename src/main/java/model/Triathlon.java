@@ -76,7 +76,7 @@ public class Triathlon {
     this.location =  null;
     this.date = null;
     this.startTime = null;
-    this.weather = null;
+    this.weather = WeatherConditions.SUNNY;
     this.temperature = 72;
   }
 
