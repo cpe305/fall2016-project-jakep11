@@ -7,10 +7,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 
 public final class Estimator {
 
+  private static final Logger log = LoggerFactory.getLogger(Estimator.class);
+  
   // Suppress default constructor for noninstantiability
   private Estimator() {
     throw new AssertionError();
@@ -54,6 +59,8 @@ public final class Estimator {
   }
 
   public static Triathlon scaleForStartTime(String startTime, Triathlon tri) {
+    
+    
     String earlyDateString = "6:59 AM";
     String lateDateString = "10:01 AM";
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm aa");
@@ -70,7 +77,8 @@ public final class Estimator {
         scalar = 1.03;
       }
     } catch (Exception exception) {
-      System.out.println(exception.getMessage());
+      
+      log.info(exception.getMessage());
     }
 
 
