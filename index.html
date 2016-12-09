@@ -12,7 +12,7 @@
   <body>
     <section class="page-header">
       <h1 class="project-name">TriTimeTracker</h1>
-      <h2 class="project-tagline">fall2016-project-jakep11 created by GitHub Classroom</h2>
+      <h2 class="project-tagline">All your triathlon data in one place!</h2>
       <a href="https://github.com/cpe305/fall2016-project-jakep11" class="btn">View on GitHub</a>
       <a href="https://github.com/cpe305/fall2016-project-jakep11/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/cpe305/fall2016-project-jakep11/tarball/master" class="btn">Download .tar.gz</a>
@@ -22,7 +22,7 @@
       <h2>
 <a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose.</h2>
 
-<p>The TriTimeTracker is a web application that serves to track previous Triathlon times, provide statistics, and estimate future triathlons. The web app allows for the creation of multiple user accounts and will store each individuals data. This project was created as a class project for CPE 305 Individual Software Design and Development at Cal Poly San Luis Obispo.</p>
+<p>The TriTimeTracker is a web application that serves to track previous Triathlon times, provide statistics, and estimate future triathlons. The web app allows for the secure creation of multiple user accounts and will store each individuals data. This project was created as a class project for CPE 305 Individual Software Design and Development at Cal Poly San Luis Obispo.</p>
 
 <h2>
 <a id="walk-through" class="anchor" href="#walk-through" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Walk Through</h2>
@@ -48,9 +48,13 @@
 <h2>
 <a id="architecture" class="anchor" href="#architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Architecture</h2>
 
-<p>The software uses a Service-Oriented architecture as pictured below. The backend REST API is built with the Java Spring Framework and the frontend is built with AngularJS.</p>
+<p>The software uses a Service-Oriented architecture as pictured below. The backend REST API is built with the Java Spring Framework and the frontend is built with AngularJS. A Model-View-Controller (MVC) architecture is used and the View component consists of AngularJS. AngularJS contains an MVC, so within the View of the broader MVC, there is another MVC within.</p>
 
 <p><img src="http://i.imgur.com/eJqhLVa.jpg" alt=""></p>
+
+<p>Below is a more detailed Class Diagram</p>
+
+<p><img src="http://i.imgur.com/jze753C.jpg" alt=""></p>
 
 <h2>
 <a id="technologiestools-used" class="anchor" href="#technologiestools-used" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Technologies/Tools Used</h2>
@@ -70,7 +74,8 @@
 <li>Eclipse</li>
 <li>Maven</li>
 <li>Sonarqube</li>
-<li>Travis CI</li>
+<li>Travis CI <a href="https://travis-ci.org/cpe305/fall2016-project-jakep11"><img src="https://travis-ci.org/cpe305/fall2016-project-jakep11.svg?branch=master" alt="Build Status"></a>
+</li>
 <li>Checkstyle (Google Style Guide for Java)</li>
 <li>GitHub (obviously if you are reading this)</li>
 </ul>
@@ -78,28 +83,36 @@
 <h3>
 <a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h3>
 
-<ol>
-<li>Singleton Pattern (Database instance and JPA Repositories)</li>
-</ol>
+<ul>
+<li>Singleton Pattern (Database instance and JPA Repositories)
+
+<ul>
+<li>Easily kept track of single database instance and TriathlonRepository and UserRepository</li>
+</ul>
+</li>
+<li>(Spring framework and AngularJS inherently use several other patterns such as the Observer Pattern)</li>
+</ul>
 
 <h2>
 <a id="design-patterns-i-should-have-used" class="anchor" href="#design-patterns-i-should-have-used" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns I Should Have Used</h2>
 
-<ol>
-<li>Decorator Pattern </li>
-<li>State Pattern</li>
-</ol>
+<ul>
+<li>Decorator Pattern (To extend the attributes of a Triathlon)</li>
+<li>State Pattern (To save Triathlon estimates and implement various estimations based on the state of the Triathlon)</li>
+</ul>
 
 <h2>
-<a id="why-my-design-is-robust" class="anchor" href="#why-my-design-is-robust" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why My Design is Robust</h2>
+<a id="why-my-design-is-robustwhat-i-like-about-my-project" class="anchor" href="#why-my-design-is-robustwhat-i-like-about-my-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why My Design is Robust/What I like about my project</h2>
 
 <ol>
 <li>Completely Decoupled REST API and User Interface
 
 <ul>
-<li>The REST API can be paired with any frontend User Interface such as an Android or iOS app instead of a webpage</li>
+<li>The REST API can be paired with any frontend User Interface such as an Android or iOS app instead of a website. </li>
 </ul>
 </li>
+<li>Fully secured/authenticated API.</li>
+<li>Basic Framework of project is easily extendable. </li>
 </ol>
 
 <h2>
@@ -114,6 +127,7 @@
 </ul>
 </li>
 <li>Java Spring Framework is a pain. There is a ton of "convention over configuration" that makes it easy to do a ton of "magic" with little code but makes extension from the default, very difficult. For example, setting up the database and user authentication was a nightmare.</li>
+<li>The Continuous Integration workflow is a huge help in maintaining the reliability of the application. Each tool I used (listed above) was beneficial to the creation and maintainability of the project.</li>
 </ol>
 
 <h3>
