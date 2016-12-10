@@ -347,8 +347,6 @@ app.controller('addTriathlon', function($scope, $http, $rootScope, $location) {
 			console.log("failed to add Tri");
 		});
 	}
-
-	
 });
 
 app.controller('statistics', function($scope, $http, $rootScope) {
@@ -428,7 +426,6 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 	$scope.getAverageBikeDistance();
 	$scope.getAverageRunDistance();
 
-	
 	$scope.populateGraph = function(tri) {
 		console.log("populating graph");
 		$scope.averageSwimPace = $scope.averageSwimTime / $scope.averageSwimDistance * 100;
@@ -450,7 +447,6 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 		  ];
 	}
 	
-	
 	function initializeGraphs() {
 	
 		$scope.singleTriSwim_labels = ['Swim Pace'];
@@ -462,8 +458,6 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 		$scope.singleTriRun_labels = ['Run Pace'];
 		$scope.singleTriRun_series = ['Average Tri', 'This Tri'];
 
-	  
-	  
 	    $scope.singleTriSwim_options = {
 			  scales: {
 				    yAxes: [{
@@ -496,9 +490,7 @@ app.controller('statistics', function($scope, $http, $rootScope) {
 				    }]
 				  }
 				}
-	  
-	  
-	  
+	   
 	
 	$scope.allTrisSwim_labels = [];
 	$scope.allTrisSwim_data = [];
