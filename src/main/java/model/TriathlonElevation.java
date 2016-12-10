@@ -5,6 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Class that models the TriathlonElevation which consists of a bike elevation and run elevation for
+ * a Triathlon.
+ * 
+ * @author Jake Pickett
+ *
+ */
 @Entity
 public class TriathlonElevation {
   @Id
@@ -12,12 +19,12 @@ public class TriathlonElevation {
   private Long id;
   private double bikeElevation;
   private double runElevation;
-  
+
   public TriathlonElevation(double bike, double run) {
     this.bikeElevation = bike;
     this.runElevation = run;
   }
-  
+
   public TriathlonElevation() {
     this.bikeElevation = 0;
     this.runElevation = 0;

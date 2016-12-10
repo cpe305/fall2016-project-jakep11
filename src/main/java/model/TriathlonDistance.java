@@ -5,6 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Class that models the distance of a triathlon. Consists of swim, bike, and run distance.
+ * 
+ * @author Jake Pickett
+ *
+ */
 @Entity
 public class TriathlonDistance {
   @Id
@@ -104,11 +110,10 @@ public class TriathlonDistance {
     }
     TriathlonDistance triDist = (TriathlonDistance) obj;
     double epsilon = 0.0001;
-    return ((swim - triDist.getSwim()) < epsilon) 
-        && ((bike - triDist.getBike()) < epsilon)
+    return ((swim - triDist.getSwim()) < epsilon) && ((bike - triDist.getBike()) < epsilon)
         && ((run - triDist.getRun()) < epsilon);
   }
-  
+
   @Override
   public int hashCode() {
     return 1;

@@ -33,6 +33,11 @@ import repositories.UserRepository;
 import java.util.Date;
 
 
+/**
+ * Class to run the Java Spring application which packages the website with a server to run.
+ * @author Jake Pickett
+ *
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = "controller")
 @ComponentScan(basePackages = "model")

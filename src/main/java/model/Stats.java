@@ -3,7 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Class that calculates Statistics on triathlons and various triathlon components.
+ * @author Jake Pickett
+ *
+ */
 public final class Stats {
 
   private Stats() {

@@ -8,11 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 /**
- * Project Description.
+ * Class that models the time taken to complete a Triathlon. Consists of Time for each segment of
+ * the triathlon.
  * 
  * @author Jake Pickett
- * @author Sonia Narayanan
- * @version October 12, 2016
+ *
  */
 
 @Entity
@@ -48,7 +48,7 @@ public class TriathlonTime {
     this.t2Time = t2;
     this.runTime = run;
   }
-  
+
   public TriathlonTime() {
     this.swimTime = new Time();
     this.t1Time = new Time();
@@ -111,7 +111,7 @@ public class TriathlonTime {
       return false;
     }
     TriathlonTime triTime = (TriathlonTime) obj;
-    
+
     return swimTime.equals(triTime.getSwimTime()) && t1Time.equals(triTime.getT1Time())
         && bikeTime.equals(triTime.getBikeTime()) && t2Time.equals(triTime.getT2Time())
         && runTime.equals(triTime.getRunTime());
@@ -122,7 +122,7 @@ public class TriathlonTime {
     return "S: " + swimTime + ". T1: " + t1Time + ". Bike: " + bikeTime + ". T2: " + t2Time
         + ". Run: " + runTime;
   }
-  
+
   @Override
   public int hashCode() {
     return 1;

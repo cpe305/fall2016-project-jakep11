@@ -8,11 +8,14 @@ import java.util.Date;
 import java.util.List;
 
 
-
+/**
+ * Class that estimates Triathlons based on previous triathlons and an input of factors.
+ * @author Jake Pickett
+ *
+ */
 public final class Estimator {
 
   
-  // Suppress default constructor for noninstantiability
   private Estimator() {
     throw new AssertionError();
   }

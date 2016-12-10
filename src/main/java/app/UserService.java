@@ -8,6 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import repositories.UserRepository;
 
+/**
+ * Class to create a new User in the database. Checks to see if the username already exists and
+ * returns null if it does.
+ * 
+ * @author Jake Pickett
+ *
+ */
 @Service
 public class UserService implements IUserService {
   @Autowired
@@ -25,7 +32,7 @@ public class UserService implements IUserService {
   }
 
   private boolean usernameExists(String username) {
-    //Checking if username exists
+    // Checking if username exists
     if (!repository.findByUsername(username).isEmpty()) {
       return true;
     }

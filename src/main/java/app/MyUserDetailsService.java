@@ -16,6 +16,11 @@ import repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that assists in login authentication and returns the Spring security context.
+ * @author Jake Pickett
+ *
+ */
 @Service
 @Transactional
 public class MyUserDetailsService implements UserDetailsService {

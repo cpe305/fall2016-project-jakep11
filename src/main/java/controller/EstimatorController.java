@@ -20,6 +20,11 @@ import repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Class that acts as a REST API Controller that handles requests to estimate triathlons.
+ * @author Jake Pickett
+ *
+ */
 @RestController
 public class EstimatorController {
 

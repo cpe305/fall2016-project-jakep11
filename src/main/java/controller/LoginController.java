@@ -22,7 +22,11 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 
 
-
+/**
+ * Class that acts as a REST API Controller that handles login and account creation requests.
+ * @author Jake Pickett
+ *
+ */
 @RestController
 public class LoginController {
   @Autowired

@@ -8,9 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
+/**
+ * Class that models a User and stores username, password, and a list of triathlons that they've
+ * completed.
+ * 
+ * @author Jake Pickett
+ *
+ */
 @Entity
-
 public class User {
 
   @Id

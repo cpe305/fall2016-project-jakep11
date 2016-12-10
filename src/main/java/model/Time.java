@@ -5,6 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Class that models elapsed time. The elapsed time is stored in hours, minutes, and seconds. The
+ * default Java Time class included unnecessary overhead for storing elapsed time instead of time of
+ * day.
+ * 
+ * @author Jake Pickett
+ *
+ */
 @Entity
 public class Time {
 

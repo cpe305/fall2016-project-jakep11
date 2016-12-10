@@ -10,6 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+/**
+ * Class to model a Triathlon. Contains several other classes as attributes.
+ * @author Jake Pickett
+ *
+ */
 @Entity
 public class Triathlon {
 

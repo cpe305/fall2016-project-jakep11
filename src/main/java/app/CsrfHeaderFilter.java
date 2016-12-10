@@ -12,7 +12,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * Class to handle CSRF Token Requests and verify their authenticity.
+ * @author Jake Pickett
+ *
+ */
 public class CsrfHeaderFilter extends OncePerRequestFilter {
   
   @Override

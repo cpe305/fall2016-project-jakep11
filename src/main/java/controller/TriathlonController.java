@@ -23,7 +23,11 @@ import java.util.Date;
 import java.util.List;
 
 
-
+/**
+ * Class that acts as a REST API Controller that handles requests for triathlon information.
+ * @author Jake Pickett
+ *
+ */
 @RestController
 public class TriathlonController {
 

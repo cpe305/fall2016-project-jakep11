@@ -14,6 +14,11 @@ import repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to authenticate a user's credentials.
+ * @author Jake Pickett
+ *
+ */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 

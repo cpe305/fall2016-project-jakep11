@@ -11,21 +11,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import repositories.TriathlonRepository;
 import repositories.UserRepository;
 
 import java.util.ArrayList;
 
+/**
+ * Class that acts as a REST API Controller that handles requests for calculating statistics on
+ * Triathlons.
+ * 
+ * @author Jake Pickett
+ *
+ */
 @RestController
 public class StatsController {
   @Autowired
   UserRepository userRepo;
-  
+
   @Autowired
   TriathlonRepository triRepo;
-  
-  
+
+
   @RequestMapping(path = "/averageSwimTime", method = RequestMethod.GET)
   public int averageSwimTime(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
@@ -35,7 +41,7 @@ public class StatsController {
     }
     return Stats.getAverageSwimTime(tris).getTimeInSeconds();
   }
-  
+
   @RequestMapping(path = "/averageBikeTime", method = RequestMethod.GET)
   public int averageBikeTime(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
@@ -45,7 +51,7 @@ public class StatsController {
     }
     return Stats.getAverageBikeTime(tris).getTimeInSeconds();
   }
-  
+
   @RequestMapping(path = "/averageRunTime", method = RequestMethod.GET)
   public int averageRunTime(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
@@ -55,7 +61,7 @@ public class StatsController {
     }
     return Stats.getAverageRunTime(tris).getTimeInSeconds();
   }
-  
+
   @RequestMapping(path = "/averageSwimDistance", method = RequestMethod.GET)
   public double averageSwimDistance(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
@@ -65,7 +71,7 @@ public class StatsController {
     }
     return Stats.getAverageSwimDistance(tris);
   }
-  
+
   @RequestMapping(path = "/averageBikeDistance", method = RequestMethod.GET)
   public double averageBikeDistance(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
@@ -75,7 +81,7 @@ public class StatsController {
     }
     return Stats.getAverageBikeDistance(tris);
   }
-  
+
   @RequestMapping(path = "/averageRunDistance", method = RequestMethod.GET)
   public double averageRunDistance(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
@@ -85,7 +91,7 @@ public class StatsController {
     }
     return Stats.getAverageRunDistance(tris);
   }
-  
+
   @RequestMapping(path = "/averageTimeFromAllTris", method = RequestMethod.GET)
   public TriathlonTime averageTimeFromAllTris(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
@@ -95,7 +101,7 @@ public class StatsController {
     }
     return Stats.getAverageTimeFromAllTris(tris);
   }
-  
+
   @RequestMapping(path = "/averagePaceFromAllTris", method = RequestMethod.GET)
   public Triathlon averagePaceFromAllTris(@RequestParam(value = "username") String username) {
     ArrayList<Triathlon> tris = new ArrayList<>();
